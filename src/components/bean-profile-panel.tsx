@@ -3,6 +3,9 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp, Leaf } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { BeanProfile, FlavorNote, Origin, AltitudeRange, ProcessingMethod, RoastLevel } from "@/lib/types";
+import { BEAN_LIBRARY } from "@/lib/bean-library";
+
+type ExtProfile = BeanProfile & { region?: string; variety?: string; body?: string };
 
 const ORIGINS: Origin[] = [
   "Ethiopia", "Kenya", "Colombia", "Brazil", "Yemen",
@@ -12,6 +15,8 @@ const ORIGINS: Origin[] = [
 const ALTITUDES: AltitudeRange[] = ["Below 1000m", "1000-1400m", "1400-1700m", "1700-2000m", "2000m+"];
 const PROCESSING: ProcessingMethod[] = ["Washed", "Natural", "Honey", "Anaerobic", "Wet-Hulled"];
 const ROASTS: RoastLevel[] = ["Light", "Medium-Light", "Medium", "Medium-Dark", "Dark"];
+const BODY_OPTIONS = ["خفيف", "متوسط", "ممتلئ", "كريمي", "ناعم وعميق"];
+
 const FLAVOR_NOTES: FlavorNote[] = [
   "Floral", "Fruity", "Citrus", "Berry", "Chocolate",
   "Nutty", "Caramel", "Spicy", "Earthy", "Tropical", "Stone Fruit", "Wine-like",
@@ -131,7 +136,37 @@ export function BeanProfilePanel({ value, onChange }: Props) {
 
       {open && (
         <div className="px-5 pb-5 space-y-5 animate-slide-down border-t border-surface-600/50">
-          <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Quick-select from library */}
+          <div className="pt-4 space-y-1.5">
+            <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">اختر بن جاهز</label>
+            <select
+              defaultValue=""
+              onChange={(e) => {
+                const bean = BEAN_LIBRARY.find((b) => b.id === e.target.value);
+                if (!bean) return;
+                onChange({
+                  ...value,
+                  origin: bean.origin,
+                  altitude: bean.altitude,
+                  processing: bean.processing,
+                  roast: bean.roast,
+                  flavorNotes: bean.flavorNotes,
+                  ...(bean.region !== undefined && { region: bean.region } as object),
+                  ...(bean.variety !== undefined && { variety: bean.variety } as object),
+                  ...(bean.body !== undefined && { body: bean.body } as object),
+                } as BeanProfile);
+                e.target.value = "";
+              }}
+              className="input-field text-sm"
+            >
+              <option value="">— اختر من المكتبة —</option>
+              {BEAN_LIBRARY.map((b) => (
+                <option key={b.id} value={b.id}>{b.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Origin */}
             <div className="space-y-1.5">
               <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">المنشأ</label>
@@ -198,6 +233,43 @@ export function BeanProfilePanel({ value, onChange }: Props) {
                   </button>
                 ))}
               </div>
+            </div>
+
+            {/* Region */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">المنطقة</label>
+              <input
+                type="text"
+                placeholder="مثال: يرغاتشيفي"
+                value={(value as ExtProfile).region || ""}
+                onChange={(e) => onChange({ ...value, region: e.target.value } as BeanProfile)}
+                className="input-field text-sm"
+              />
+            </div>
+
+            {/* Variety */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">السلالة</label>
+              <input
+                type="text"
+                placeholder="مثال: Heirloom"
+                value={(value as ExtProfile).variety || ""}
+                onChange={(e) => onChange({ ...value, variety: e.target.value } as BeanProfile)}
+                className="input-field text-sm"
+              />
+            </div>
+
+            {/* Body */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">القوام</label>
+              <select
+                value={(value as ExtProfile).body || ""}
+                onChange={(e) => onChange({ ...value, body: e.target.value } as BeanProfile)}
+                className="input-field text-sm"
+              >
+                <option value="">اختر القوام…</option>
+                {BODY_OPTIONS.map((b) => <option key={b} value={b}>{b}</option>)}
+              </select>
             </div>
           </div>
 
