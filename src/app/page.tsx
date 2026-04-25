@@ -111,6 +111,9 @@ export default function HomePage() {
       <div>
         <h1 className="text-2xl font-bold text-ink-100">حاسبة V60</h1>
         <p className="text-ink-400 text-sm mt-0.5">أدخل كمية الماء أو القهوة للبدء</p>
+        <p className="text-xs mt-2" style={{ color: "var(--ink-500)" }}>
+          بنيت هذي الأداة عشاني أنا — وبعدين قررت أشاركها 🤙
+        </p>
       </div>
 
       <BrewModeToggle value={brewMode} onChange={setBrewMode} />

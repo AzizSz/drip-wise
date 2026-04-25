@@ -22,7 +22,7 @@ const ibmPlexArabic = IBM_Plex_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
-  title: "DripWise — حاسبة V60 Pour Over",
+  title: "☕ DripWise — أداة عبدالعزيز للقهوة",
   description: "حاسبة V60 ذكية مع ملفات الحبوب ودليل النسب ووصفات التحضير.",
   manifest: "/manifest.json",
   appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "DripWise" },
@@ -43,9 +43,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="flex-1 pb-24 md:pb-8">
             {children}
           </main>
-          <footer className="hidden md:flex items-center justify-center gap-1.5 py-4 text-xs" style={{ color: "var(--ink-500)" }}>
-            <span>☕</span>
-            <span>صنع بواسطة Abdulaziz-Saleh</span>
+          <footer className="hidden md:flex items-center justify-center gap-3 py-4 text-xs" style={{ color: "var(--ink-500)" }}>
+            <span>صنع بـ ☕ وشغف من عبدالعزيز صالح — الهفوف</span>
+            <span>·</span>
+            <a href="/about" style={{ color: "var(--ink-400)" }} className="hover:text-ink-100 transition-colors">
+              تواصل معي
+            </a>
           </footer>
         </div>
       </body>
