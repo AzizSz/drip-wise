@@ -1,0 +1,76 @@
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Calculator, BookOpen, BarChart2, Settings, Coffee } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const NAV_ITEMS = [
+  { href: "/", label: "Brew", icon: Calculator },
+  { href: "/recipe", label: "Recipe", icon: Coffee },
+  { href: "/guide", label: "Guide", icon: BarChart2 },
+  { href: "/beans", label: "Beans", icon: BookOpen },
+  { href: "/settings", label: "Settings", icon: Settings },
+];
+
+export function NavBar() {
+  const pathname = usePathname();
+
+  return (
+    <>
+      {/* Desktop top nav */}
+      <header className="hidden md:flex items-center justify-between px-6 py-4 bg-surface-900 border-b border-surface-600 sticky top-0 z-50 backdrop-blur-sm">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-accent-500 flex items-center justify-center">
+            <Coffee size={16} className="text-white" />
+          </div>
+          <span className="text-xl font-bold text-ink-100">Drip<span className="text-accent-500">Wise</span></span>
+        </Link>
+        <nav className="flex items-center gap-1">
+          {NAV_ITEMS.map(({ href, label, icon: Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              className={cn(pathname === href ? "nav-link-active" : "nav-link")}
+            >
+              <Icon size={16} />
+              <span>{label}</span>
+            </Link>
+          ))}
+        </nav>
+      </header>
+
+      {/* Mobile bottom nav */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-surface-900 border-t border-surface-600 px-2 pb-safe">
+        <div className="flex items-center justify-around py-2">
+          {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
+            const active = pathname === href;
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={cn(
+                  "flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all",
+                  active ? "text-accent-500" : "text-ink-400 hover:text-ink-200"
+                )}
+              >
+                <Icon size={20} />
+                <span className="text-[10px] font-medium">{label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
+
+      {/* Mobile top bar */}
+      <header className="md:hidden flex items-center justify-between px-4 py-3 bg-surface-900 border-b border-surface-600 sticky top-0 z-40">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-full bg-accent-500 flex items-center justify-center">
+            <Coffee size={13} className="text-white" />
+          </div>
+          <span className="text-lg font-bold text-ink-100">Drip<span className="text-accent-500">Wise</span></span>
+        </Link>
+        <span className="text-xs text-ink-400">V60 Calculator</span>
+      </header>
+    </>
+  );
+}

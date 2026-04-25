@@ -1,0 +1,87 @@
+export type BrewMode = "hot" | "iced";
+
+export type RatioOption = "1:10" | "1:12" | "1:13" | "1:14" | "1:15" | "1:16" | "1:17" | "custom";
+
+export type Origin =
+  | "Ethiopia" | "Kenya" | "Colombia" | "Brazil" | "Yemen"
+  | "Guatemala" | "Costa Rica" | "Panama" | "Rwanda" | "Burundi"
+  | "Indonesia" | "Mexico" | "Peru" | "Honduras" | "El Salvador" | "";
+
+export type AltitudeRange =
+  | "Below 1000m" | "1000-1400m" | "1400-1700m" | "1700-2000m" | "2000m+" | "";
+
+export type ProcessingMethod = "Washed" | "Natural" | "Honey" | "Anaerobic" | "Wet-Hulled" | "";
+
+export type RoastLevel = "Light" | "Medium-Light" | "Medium" | "Medium-Dark" | "Dark" | "";
+
+export type FlavorNote =
+  | "Floral" | "Fruity" | "Citrus" | "Berry" | "Chocolate"
+  | "Nutty" | "Caramel" | "Spicy" | "Earthy" | "Tropical"
+  | "Stone Fruit" | "Wine-like";
+
+export type GrindSize = "Fine" | "Medium-Fine" | "Medium" | "Medium-Coarse" | "Coarse";
+
+export interface BeanProfile {
+  origin: Origin;
+  altitude: AltitudeRange;
+  processing: ProcessingMethod;
+  roast: RoastLevel;
+  flavorNotes: FlavorNote[];
+  name?: string;
+}
+
+export interface BrewRecommendation {
+  ratio: string;
+  ratioNumber: number;
+  waterTemp: string;
+  waterTempRange: [number, number];
+  grindSize: GrindSize;
+  bloomTime: number;
+  flavorTip: string;
+}
+
+export interface BrewRecipeStep {
+  step: number;
+  label: string;
+  amount: number;
+  totalWater: number;
+  timestamp: string;
+  duration: number;
+}
+
+export interface BrewCalculation {
+  coffee: number;
+  water: number;
+  ratio: number;
+  brewMode: BrewMode;
+  brewWater?: number;
+  iceWater?: number;
+  recipe: BrewRecipeStep[];
+  bloomTime: number;
+  totalBrewTime: string;
+  recommendation?: BrewRecommendation;
+}
+
+export interface SavedBean extends BeanProfile {
+  id: string;
+  savedAt: number;
+}
+
+export interface AppSettings {
+  preferredRatio: RatioOption;
+  defaultBrewMode: BrewMode;
+  language: "en" | "ar";
+  defaultBeanProfile?: Partial<BeanProfile>;
+}
+
+export interface BeanLibraryEntry {
+  id: string;
+  name: string;
+  origin: Origin;
+  altitude: AltitudeRange;
+  processing: ProcessingMethod;
+  roast: RoastLevel;
+  flavorNotes: FlavorNote[];
+  description: string;
+  typicalRatio: string;
+}

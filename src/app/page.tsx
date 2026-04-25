@@ -1,101 +1,244 @@
-import Image from "next/image";
+"use client";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Copy, Share2, ArrowRight, Droplets, Coffee, BookmarkPlus, Check } from "lucide-react";
+import { RatioSelector } from "@/components/ratio-selector";
+import { BrewModeToggle } from "@/components/brew-mode-toggle";
+import { BeanProfilePanel } from "@/components/bean-profile-panel";
+import { RecommendationCard } from "@/components/recommendation-card";
+import type { BrewMode, RatioOption, BeanProfile } from "@/lib/types";
+import {
+  calcFromWater, calcFromCoffee, getBeanRecommendation, buildBrewCalculation,
+} from "@/lib/calculator";
+import { encodeShareUrl, saveLastCalc, saveBean, getSettings } from "@/lib/storage";
 
-export default function Home() {
+const RATIO_MAP: Record<Exclude<RatioOption, "custom">, number> = {
+  "1:10": 10, "1:12": 12, "1:13": 13, "1:14": 14,
+  "1:15": 15, "1:16": 16, "1:17": 17,
+};
+
+const EMPTY_BEAN: BeanProfile = { origin: "", altitude: "", processing: "", roast: "", flavorNotes: [] };
+
+export default function HomePage() {
+  const router = useRouter();
+  const [water, setWater] = useState<string>("300");
+  const [coffee, setCoffee] = useState<string>("");
+  const [lastEdited, setLastEdited] = useState<"water" | "coffee">("water");
+  const [ratio, setRatio] = useState<RatioOption>("1:14");
+  const [customRatio, setCustomRatio] = useState(14);
+  const [brewMode, setBrewMode] = useState<BrewMode>("hot");
+  const [bean, setBean] = useState<BeanProfile>(EMPTY_BEAN);
+  const [copied, setCopied] = useState(false);
+  const [beanSaved, setBeanSaved] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  const ratioNum = ratio === "custom" ? customRatio : RATIO_MAP[ratio];
+
+  useEffect(() => {
+    setMounted(true);
+    const settings = getSettings();
+    setRatio(settings.preferredRatio);
+    setBrewMode(settings.defaultBrewMode);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    if (lastEdited === "water" && water) {
+      const w = parseFloat(water);
+      if (!isNaN(w) && w > 0) setCoffee(String(calcFromWater(w, ratioNum)));
+    }
+  }, [water, ratioNum, lastEdited, mounted]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    if (lastEdited === "coffee" && coffee) {
+      const c = parseFloat(coffee);
+      if (!isNaN(c) && c > 0) setWater(String(calcFromCoffee(c, ratioNum)));
+    }
+  }, [coffee, ratioNum, lastEdited, mounted]);
+
+  const hasBeanData = !!(bean.origin || bean.roast || bean.processing);
+  const recommendation = hasBeanData ? getBeanRecommendation(bean) : undefined;
+  const bloomTime = recommendation?.bloomTime ?? 45;
+  const coffeeNum = parseFloat(coffee) || 0;
+  const waterNum = parseFloat(water) || 0;
+
+  const calculation = coffeeNum > 0 && waterNum > 0
+    ? buildBrewCalculation(coffeeNum, waterNum, ratioNum, brewMode, bloomTime, recommendation)
+    : null;
+
+  function handleCopy() {
+    if (!calculation) return;
+    const text = brewMode === "iced"
+      ? `Coffee: ${calculation.coffee}g | Brew water: ${calculation.brewWater}ml | Ice: ${calculation.iceWater}ml | Ratio 1:${ratioNum}`
+      : `Coffee: ${calculation.coffee}g | Water: ${calculation.water}ml | Ratio 1:${ratioNum}`;
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }
+
+  function handleShare() {
+    if (!coffeeNum) return;
+    const url = encodeShareUrl({ coffee: coffeeNum, water: waterNum, ratio: ratioNum, mode: brewMode, bean: hasBeanData ? bean : undefined });
+    navigator.clipboard.writeText(url);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  function handleGoToRecipe() {
+    if (!calculation) return;
+    saveLastCalc(calculation);
+    router.push("/recipe");
+  }
+
+  function handleSaveBean() {
+    if (!hasBeanData) return;
+    saveBean(bean);
+    setBeanSaved(true);
+    setTimeout(() => setBeanSaved(false), 2000);
+  }
+
+  function applyRecommendedRatio() {
+    if (!recommendation) return;
+    const r = `1:${recommendation.ratioNumber}` as RatioOption;
+    if (r in RATIO_MAP) setRatio(r);
+    else { setRatio("custom"); setCustomRatio(recommendation.ratioNumber); }
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold text-ink-100">V60 Calculator</h1>
+        <p className="text-ink-400 text-sm mt-0.5">Enter water or coffee amount to get started</p>
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+      <BrewModeToggle value={brewMode} onChange={setBrewMode} />
+
+      <div className="card p-5 space-y-5">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-ink-300 uppercase tracking-wide flex items-center gap-1.5">
+              <Droplets size={12} className="text-sky-400" />
+              Water (ml)
+            </label>
+            <input
+              type="number"
+              value={water}
+              onChange={(e) => { setWater(e.target.value); setLastEdited("water"); }}
+              className="input-field text-lg font-bold text-sky-300"
+              placeholder="300"
+              min={0}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-ink-300 uppercase tracking-wide flex items-center gap-1.5">
+              <Coffee size={12} className="text-accent-500" />
+              Coffee (g)
+            </label>
+            <input
+              type="number"
+              value={coffee}
+              onChange={(e) => { setCoffee(e.target.value); setLastEdited("coffee"); }}
+              className="input-field text-lg font-bold text-accent-400"
+              placeholder="21.4"
+              min={0}
+            />
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {brewMode === "iced" && waterNum > 0 && (
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-sky-950/30 border border-sky-800/30 rounded-xl p-3 text-center">
+              <div className="text-sky-300 font-bold text-xl">{Math.round(waterNum * 0.6)} ml</div>
+              <div className="text-sky-600 text-xs mt-0.5">Brew water (60%)</div>
+            </div>
+            <div className="bg-cyan-950/30 border border-cyan-800/30 rounded-xl p-3 text-center">
+              <div className="text-cyan-300 font-bold text-xl">{Math.round(waterNum * 0.4)} ml</div>
+              <div className="text-cyan-700 text-xs mt-0.5">Ice (40%)</div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="card p-5 space-y-3">
+        <h2 className="text-sm font-semibold text-ink-300 uppercase tracking-wide">Coffee : Water Ratio</h2>
+        <RatioSelector
+          value={ratio}
+          customValue={customRatio}
+          onChange={setRatio}
+          onCustomChange={setCustomRatio}
+        />
+      </div>
+
+      <BeanProfilePanel value={bean} onChange={setBean} />
+
+      {recommendation && (
+        <div className="space-y-3">
+          <RecommendationCard rec={recommendation} />
+          <button onClick={applyRecommendedRatio} className="w-full btn-secondary text-sm">
+            Apply recommended ratio ({recommendation.ratio})
+          </button>
+        </div>
+      )}
+
+      {calculation && (
+        <div className="card p-5 space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="font-semibold text-ink-100">Your Brew</h2>
+            <span className="text-xs bg-surface-700 text-ink-400 rounded-full px-2 py-1">
+              1:{ratioNum} ratio
+            </span>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3">
+            <div className="bg-surface-900/80 rounded-xl p-3 text-center">
+              <div className="text-accent-400 font-bold text-xl">{calculation.coffee}g</div>
+              <div className="text-ink-400 text-xs mt-0.5">Coffee</div>
+            </div>
+            <div className="bg-surface-900/80 rounded-xl p-3 text-center">
+              <div className="text-sky-400 font-bold text-xl">{calculation.brewWater}ml</div>
+              <div className="text-ink-400 text-xs mt-0.5">{brewMode === "iced" ? "Brew water" : "Water"}</div>
+            </div>
+            {brewMode === "iced" ? (
+              <div className="bg-surface-900/80 rounded-xl p-3 text-center">
+                <div className="text-cyan-400 font-bold text-xl">{calculation.iceWater}ml</div>
+                <div className="text-ink-400 text-xs mt-0.5">Ice</div>
+              </div>
+            ) : (
+              <div className="bg-surface-900/80 rounded-xl p-3 text-center">
+                <div className="text-ink-200 font-bold text-xl">{calculation.totalBrewTime}</div>
+                <div className="text-ink-400 text-xs mt-0.5">Brew time</div>
+              </div>
+            )}
+          </div>
+
+          <div className="flex gap-2 flex-wrap">
+            <button onClick={handleGoToRecipe} className="btn-primary flex items-center gap-2 flex-1">
+              <Coffee size={16} />
+              View Recipe
+              <ArrowRight size={14} />
+            </button>
+            <button onClick={handleCopy} className="btn-secondary flex items-center gap-2">
+              {copied ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
+              {copied ? "Copied!" : "Copy"}
+            </button>
+            <button onClick={handleShare} className="btn-ghost flex items-center gap-2">
+              <Share2 size={16} />
+            </button>
+          </div>
+
+          {hasBeanData && (
+            <button
+              onClick={handleSaveBean}
+              className="w-full flex items-center justify-center gap-2 py-2 text-sm text-ink-400 hover:text-ink-100 border border-surface-600 hover:border-accent-500/50 rounded-xl transition-all"
+            >
+              {beanSaved ? <Check size={15} className="text-emerald-400" /> : <BookmarkPlus size={15} />}
+              {beanSaved ? "Bean saved!" : "Save bean profile"}
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }

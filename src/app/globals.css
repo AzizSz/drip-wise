@@ -3,25 +3,168 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #e5e5e5;
+  --surface-950: #0a0a0a;
+  --surface-900: #141414;
+  --surface-800: #1a1a1a;
+  --surface-700: #222222;
+  --surface-600: #2a2a2a;
+  --surface-500: #333333;
+  --ink-100: #e5e5e5;
+  --ink-200: #d4d4d4;
+  --ink-300: #a3a3a3;
+  --ink-400: #6b7280;
+  --ink-500: #4b5563;
+  --accent-300: #c4b5fd;
+  --accent-400: #a78bfa;
+  --accent-500: #8b9cf7;
+  --accent-600: #7c7cf0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+* { box-sizing: border-box; }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--surface-950);
+  color: var(--ink-100);
+  min-height: 100vh;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--surface-900); }
+::-webkit-scrollbar-thumb { background: var(--surface-600); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #3d3d3d; }
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] { -moz-appearance: textfield; }
+
+option { background-color: var(--surface-800); color: var(--ink-100); }
+
+@layer components {
+  .card {
+    background-color: var(--surface-800);
+    border: 1px solid var(--surface-600);
+    border-radius: 1rem;
+  }
+  .card-premium {
+    background: linear-gradient(135deg, var(--surface-800) 0%, var(--surface-900) 100%);
+    border: 1px solid var(--surface-600);
+    border-radius: 1rem;
+  }
+  .btn-primary {
+    background-color: var(--accent-500);
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .btn-primary:hover { background-color: var(--accent-400); }
+  .btn-primary:active { transform: scale(0.95); }
+
+  .btn-secondary {
+    background-color: var(--surface-700);
+    color: var(--ink-200);
+    font-weight: 500;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .btn-secondary:hover { background-color: var(--surface-600); }
+  .btn-secondary:active { transform: scale(0.95); }
+
+  .btn-ghost {
+    color: var(--ink-300);
+    font-weight: 500;
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .btn-ghost:hover { background-color: var(--surface-700); }
+
+  .input-field {
+    background-color: var(--surface-900);
+    border: 1px solid var(--surface-600);
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: var(--ink-100);
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+  .input-field::placeholder { color: var(--ink-500); }
+  .input-field:focus {
+    outline: none;
+    border-color: var(--accent-500);
+  }
+
+  .tag-active {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: var(--accent-500);
+    color: #ffffff;
+    border: 1px solid var(--accent-400);
+    cursor: pointer;
+  }
+  .tag-inactive {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: var(--surface-800);
+    color: var(--ink-300);
+    border: 1px solid var(--surface-600);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .tag-inactive:hover {
+    border-color: var(--accent-500);
+    color: var(--accent-400);
+  }
+
+  .recommendation-card {
+    background-color: var(--surface-800);
+    border: 1px solid rgba(139, 156, 247, 0.4);
+    border-radius: 1rem;
+    box-shadow: 0 0 24px rgba(139, 156, 247, 0.12);
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    color: var(--ink-400);
+    transition: all 0.2s;
+  }
+  .nav-link:hover {
+    color: var(--ink-100);
+    background-color: var(--surface-700);
+  }
+
+  .nav-link-active {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    color: var(--accent-500);
+    background-color: var(--surface-700);
+    font-weight: 500;
   }
 }
