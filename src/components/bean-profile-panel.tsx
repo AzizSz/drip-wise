@@ -15,6 +15,11 @@ const ROASTS: RoastLevel[] = ["Light", "Medium-Light", "Medium", "Medium-Dark", 
 const FLAVOR_NOTES: FlavorNote[] = [
   "Floral", "Fruity", "Citrus", "Berry", "Chocolate",
   "Nutty", "Caramel", "Spicy", "Earthy", "Tropical", "Stone Fruit", "Wine-like",
+  "Cherry", "Grape", "Jasmine", "Honey", "Strawberry",
+  "Apple", "Hazelnut", "Walnut", "Raisin", "Cacao",
+  "Molasses", "Vanilla", "Peach", "Mango", "Rose",
+  "Lavender", "Brown Sugar", "Toffee", "Dark Chocolate",
+  "Milk Chocolate", "Bergamot", "Hibiscus", "Tamarind", "Date",
 ];
 
 const PROCESSING_AR: Record<ProcessingMethod, string> = {
@@ -48,6 +53,30 @@ const FLAVOR_AR: Record<FlavorNote, string> = {
   Tropical: "استوائي",
   "Stone Fruit": "فاكهة حجرية",
   "Wine-like": "كالنبيذ",
+  Cherry: "كرز",
+  Grape: "عنب",
+  Jasmine: "ياسمين",
+  Honey: "عسل",
+  Strawberry: "فراولة",
+  Apple: "تفاح",
+  Hazelnut: "بندق",
+  Walnut: "جوز",
+  Raisin: "زبيب",
+  Cacao: "كاكاو",
+  Molasses: "دبس",
+  Vanilla: "فانيليا",
+  Peach: "خوخ",
+  Mango: "مانجو",
+  Rose: "ورد",
+  Lavender: "لافندر",
+  "Brown Sugar": "سكر بني",
+  Toffee: "توفي",
+  "Dark Chocolate": "شوكولاتة داكنة",
+  "Milk Chocolate": "شوكولاتة حليب",
+  Bergamot: "برغموت",
+  Hibiscus: "كركديه",
+  Tamarind: "تمر هندي",
+  Date: "تمر",
 };
 
 interface Props {

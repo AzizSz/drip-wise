@@ -17,7 +17,12 @@ export type RoastLevel = "Light" | "Medium-Light" | "Medium" | "Medium-Dark" | "
 export type FlavorNote =
   | "Floral" | "Fruity" | "Citrus" | "Berry" | "Chocolate"
   | "Nutty" | "Caramel" | "Spicy" | "Earthy" | "Tropical"
-  | "Stone Fruit" | "Wine-like";
+  | "Stone Fruit" | "Wine-like"
+  | "Cherry" | "Grape" | "Jasmine" | "Honey" | "Strawberry"
+  | "Apple" | "Hazelnut" | "Walnut" | "Raisin" | "Cacao"
+  | "Molasses" | "Vanilla" | "Peach" | "Mango" | "Rose"
+  | "Lavender" | "Brown Sugar" | "Toffee" | "Dark Chocolate"
+  | "Milk Chocolate" | "Bergamot" | "Hibiscus" | "Tamarind" | "Date";
 
 export type GrindSize = "Fine" | "Medium-Fine" | "Medium" | "Medium-Coarse" | "Coarse";
 
@@ -65,6 +70,9 @@ export interface BrewCalculation {
 export interface SavedBean extends BeanProfile {
   id: string;
   savedAt: number;
+  region?: string;
+  variety?: string;
+  body?: string;
 }
 
 export interface AppSettings {
@@ -84,4 +92,7 @@ export interface BeanLibraryEntry {
   flavorNotes: FlavorNote[];
   description: string;
   typicalRatio: string;
+  region?: string;
+  variety?: string;
+  body?: string;
 }
