@@ -47,6 +47,12 @@ const FLAVOR_AR: Record<string, string> = {
   Floral: "زهري", Fruity: "فاكهة", Citrus: "حمضيات", Berry: "توت",
   Chocolate: "شوكولاتة", Nutty: "مكسرات", Caramel: "كراميل", Spicy: "بهارات",
   Earthy: "ترابي", Tropical: "استوائي", "Stone Fruit": "فاكهة حجرية", "Wine-like": "كالنبيذ",
+  Cherry: "كرز", Grape: "عنب", Jasmine: "ياسمين", Honey: "عسل", Strawberry: "فراولة",
+  Apple: "تفاح", Hazelnut: "بندق", Walnut: "جوز", Raisin: "زبيب", Cacao: "كاكاو",
+  Molasses: "دبس السكر", Vanilla: "فانيليا", Peach: "خوخ", Mango: "مانجو", Rose: "ورد",
+  Lavender: "لافندر", "Brown Sugar": "سكر بني", Toffee: "توفي",
+  "Dark Chocolate": "شوكولاتة داكنة", "Milk Chocolate": "شوكولاتة حليب",
+  Bergamot: "برغموت", Hibiscus: "كركديه", Tamarind: "تمر هندي", Date: "تمر",
 };
 
 function BeanCard({ bean, onUse, onDelete }: {
