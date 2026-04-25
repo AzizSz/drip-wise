@@ -28,6 +28,7 @@ body {
   background-color: var(--surface-950);
   color: var(--ink-100);
   min-height: 100vh;
+  font-family: var(--font-arabic), var(--font-geist-sans), system-ui, sans-serif;
 }
 
 ::-webkit-scrollbar { width: 6px; }

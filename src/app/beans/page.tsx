@@ -25,6 +25,30 @@ const PROCESS_COLORS: Record<ProcessingMethod | "", string> = {
   "Wet-Hulled": "text-emerald-400",
 };
 
+const ROAST_AR: Record<RoastLevel | "", string> = {
+  "": "",
+  Light: "فاتح",
+  "Medium-Light": "فاتح متوسط",
+  Medium: "متوسط",
+  "Medium-Dark": "داكن متوسط",
+  Dark: "داكن",
+};
+
+const PROCESS_AR: Record<ProcessingMethod | "", string> = {
+  "": "",
+  Washed: "مغسول",
+  Natural: "طبيعي",
+  Honey: "عسلي",
+  Anaerobic: "لاهوائي",
+  "Wet-Hulled": "مقشور رطب",
+};
+
+const FLAVOR_AR: Record<string, string> = {
+  Floral: "زهري", Fruity: "فاكهة", Citrus: "حمضيات", Berry: "توت",
+  Chocolate: "شوكولاتة", Nutty: "مكسرات", Caramel: "كراميل", Spicy: "بهارات",
+  Earthy: "ترابي", Tropical: "استوائي", "Stone Fruit": "فاكهة حجرية", "Wine-like": "كالنبيذ",
+};
+
 function BeanCard({ bean, onUse, onDelete }: {
   bean: BeanLibraryEntry | SavedBean;
   onUse: () => void;
@@ -35,7 +59,7 @@ function BeanCard({ bean, onUse, onDelete }: {
     <div className="card p-4 space-y-3 hover:border-surface-500 transition-all">
       <div className="flex items-start justify-between gap-2">
         <div>
-          <h3 className="font-semibold text-ink-100">{isLibrary ? bean.name : (bean.origin || "Custom Bean")}</h3>
+          <h3 className="font-semibold text-ink-100">{isLibrary ? bean.name : (bean.origin || "حبة مخصصة")}</h3>
           <div className="flex items-center gap-2 mt-1 flex-wrap">
             {bean.origin && (
               <span className="flex items-center gap-1 text-xs text-ink-400">
@@ -76,22 +100,22 @@ function BeanCard({ bean, onUse, onDelete }: {
       <div className="flex flex-wrap gap-1.5">
         {bean.roast && (
           <span className={cn("text-[10px] font-medium px-2 py-0.5 rounded-full bg-surface-900 border border-surface-600", ROAST_COLORS[bean.roast])}>
-            {bean.roast}
+            {ROAST_AR[bean.roast]}
           </span>
         )}
         {bean.processing && (
           <span className={cn("text-[10px] font-medium px-2 py-0.5 rounded-full bg-surface-900 border border-surface-600", PROCESS_COLORS[bean.processing])}>
-            {bean.processing}
+            {PROCESS_AR[bean.processing]}
           </span>
         )}
         {(bean.flavorNotes || []).slice(0, 3).map((note) => (
           <span key={note} className="text-[10px] text-ink-300 px-2 py-0.5 rounded-full bg-surface-800 border border-surface-600">
-            {note}
+            {FLAVOR_AR[note] || note}
           </span>
         ))}
         {(bean.flavorNotes || []).length > 3 && (
           <span className="text-[10px] text-ink-400 px-2 py-0.5">
-            +{(bean.flavorNotes || []).length - 3} more
+            +{(bean.flavorNotes || []).length - 3} أكثر
           </span>
         )}
       </div>
@@ -99,7 +123,7 @@ function BeanCard({ bean, onUse, onDelete }: {
       {isLibrary && (bean as BeanLibraryEntry).typicalRatio && (
         <div className="flex items-center gap-1 text-xs text-accent-500">
           <Thermometer size={11} />
-          Typical ratio: <span className="font-medium">{(bean as BeanLibraryEntry).typicalRatio}</span>
+          النسبة المعتادة: <span className="font-medium">{(bean as BeanLibraryEntry).typicalRatio}</span>
         </div>
       )}
     </div>
@@ -145,8 +169,8 @@ export default function BeansPage() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-5">
       <div>
-        <h1 className="text-2xl font-bold text-ink-100">Bean Library</h1>
-        <p className="text-ink-400 text-sm mt-0.5">Reference profiles for popular origins</p>
+        <h1 className="text-2xl font-bold text-ink-100">مكتبة الحبوب</h1>
+        <p className="text-ink-400 text-sm mt-0.5">ملفات مرجعية للمناشئ الشهيرة</p>
       </div>
 
       <div className="flex gap-1 bg-surface-900 rounded-xl p-1 border border-surface-600 w-fit">
@@ -157,7 +181,7 @@ export default function BeansPage() {
             tab === "library" ? "bg-accent-500 text-white" : "text-ink-300 hover:text-ink-100"
           )}
         >
-          Library ({BEAN_LIBRARY.length})
+          المكتبة ({BEAN_LIBRARY.length})
         </button>
         <button
           onClick={() => setTab("saved")}
@@ -167,7 +191,7 @@ export default function BeansPage() {
           )}
         >
           <Bookmark size={13} />
-          Saved ({savedBeans.length})
+          المحفوظة ({savedBeans.length})
         </button>
       </div>
 
@@ -175,13 +199,13 @@ export default function BeansPage() {
         <>
           <div className="space-y-3">
             <div className="relative">
-              <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-400" />
+              <Search size={15} className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-400" />
               <input
                 type="text"
-                placeholder="Search beans…"
+                placeholder="ابحث عن الحبوب…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="input-field pl-9"
+                className="input-field pr-9"
               />
             </div>
             <div className="flex gap-2 flex-wrap">
@@ -190,7 +214,7 @@ export default function BeansPage() {
                 onChange={(e) => setFilterOrigin(e.target.value as Origin)}
                 className="input-field w-auto text-sm"
               >
-                <option value="">All origins</option>
+                <option value="">كل المناشئ</option>
                 {origins.map((o) => <option key={o} value={o}>{o}</option>)}
               </select>
               <select
@@ -198,15 +222,15 @@ export default function BeansPage() {
                 onChange={(e) => setFilterRoast(e.target.value as RoastLevel)}
                 className="input-field w-auto text-sm"
               >
-                <option value="">All roasts</option>
-                {roasts.map((r) => <option key={r} value={r}>{r}</option>)}
+                <option value="">كل التحميصات</option>
+                {roasts.map((r) => <option key={r} value={r}>{ROAST_AR[r]}</option>)}
               </select>
             </div>
           </div>
 
           <div className="space-y-3">
             {filtered.length === 0 ? (
-              <div className="text-center py-8 text-ink-400">No beans match your search.</div>
+              <div className="text-center py-8 text-ink-400">لا توجد حبوب تطابق بحثك.</div>
             ) : (
               filtered.map((bean) => (
                 <BeanCard key={bean.id} bean={bean} onUse={() => handleUse(bean)} />
@@ -221,8 +245,8 @@ export default function BeansPage() {
           {savedBeans.length === 0 ? (
             <div className="text-center py-8 space-y-2">
               <Bookmark size={32} className="text-surface-600 mx-auto" />
-              <p className="text-ink-400">No saved beans yet.</p>
-              <p className="text-ink-500 text-sm">Fill in a bean profile on the calculator and save it.</p>
+              <p className="text-ink-400">لا توجد حبوب محفوظة بعد.</p>
+              <p className="text-ink-500 text-sm">أكمل ملف حبة في الحاسبة واحفظها.</p>
             </div>
           ) : (
             savedBeans.map((bean) => (

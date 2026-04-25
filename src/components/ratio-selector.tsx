@@ -38,7 +38,7 @@ export function RatioSelector({ value, customValue, onChange, onCustomChange }: 
               : "bg-surface-800 text-ink-300 border-surface-600 hover:border-accent-500 hover:text-ink-100"
           )}
         >
-          Custom
+          مخصص
         </button>
       </div>
 

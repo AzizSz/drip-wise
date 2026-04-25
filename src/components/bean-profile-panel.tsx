@@ -17,6 +17,39 @@ const FLAVOR_NOTES: FlavorNote[] = [
   "Nutty", "Caramel", "Spicy", "Earthy", "Tropical", "Stone Fruit", "Wine-like",
 ];
 
+const PROCESSING_AR: Record<ProcessingMethod, string> = {
+  "": "",
+  Washed: "مغسول",
+  Natural: "طبيعي",
+  Honey: "عسلي",
+  Anaerobic: "لاهوائي",
+  "Wet-Hulled": "مقشور رطب",
+};
+
+const ROAST_AR: Record<RoastLevel, string> = {
+  "": "",
+  Light: "فاتح",
+  "Medium-Light": "فاتح متوسط",
+  Medium: "متوسط",
+  "Medium-Dark": "داكن متوسط",
+  Dark: "داكن",
+};
+
+const FLAVOR_AR: Record<FlavorNote, string> = {
+  Floral: "زهري",
+  Fruity: "فاكهة",
+  Citrus: "حمضيات",
+  Berry: "توت",
+  Chocolate: "شوكولاتة",
+  Nutty: "مكسرات",
+  Caramel: "كراميل",
+  Spicy: "بهارات",
+  Earthy: "ترابي",
+  Tropical: "استوائي",
+  "Stone Fruit": "فاكهة حجرية",
+  "Wine-like": "كالنبيذ",
+};
+
 interface Props {
   value: BeanProfile;
   onChange: (b: BeanProfile) => void;
@@ -45,19 +78,19 @@ export function BeanProfilePanel({ value, onChange }: Props) {
           <div className="w-8 h-8 rounded-lg bg-emerald-950/60 border border-emerald-800/40 flex items-center justify-center">
             <Leaf size={15} className="text-emerald-400" />
           </div>
-          <div className="text-left">
-            <p className="font-semibold text-ink-100">Bean Profile</p>
+          <div>
+            <p className="font-semibold text-ink-100">ملف الحبة</p>
             <p className="text-xs text-ink-400">
               {hasData
-                ? [value.origin, value.roast, value.processing].filter(Boolean).join(" · ")
-                : "Optional — unlocks smart recommendations"}
+                ? [value.origin, value.roast ? ROAST_AR[value.roast] : "", value.processing ? PROCESSING_AR[value.processing] : ""].filter(Boolean).join(" · ")
+                : "اختياري — يفعّل التوصيات الذكية"}
             </p>
           </div>
         </div>
         <div className="flex items-center gap-2">
           {hasData && (
             <span className="text-[10px] bg-emerald-950/60 text-emerald-400 border border-emerald-800/40 rounded-full px-2 py-0.5">
-              Active
+              نشط
             </span>
           )}
           {open
@@ -72,33 +105,33 @@ export function BeanProfilePanel({ value, onChange }: Props) {
           <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Origin */}
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">Origin</label>
+              <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">المنشأ</label>
               <select
                 value={value.origin}
                 onChange={(e) => onChange({ ...value, origin: e.target.value as Origin })}
                 className="input-field text-sm"
               >
-                <option value="">Select origin…</option>
+                <option value="">اختر المنشأ…</option>
                 {ORIGINS.map((o) => <option key={o} value={o}>{o}</option>)}
               </select>
             </div>
 
             {/* Altitude */}
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">Altitude</label>
+              <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">الارتفاع</label>
               <select
                 value={value.altitude}
                 onChange={(e) => onChange({ ...value, altitude: e.target.value as AltitudeRange })}
                 className="input-field text-sm"
               >
-                <option value="">Select altitude…</option>
+                <option value="">اختر الارتفاع…</option>
                 {ALTITUDES.map((a) => <option key={a} value={a}>{a}</option>)}
               </select>
             </div>
 
             {/* Processing */}
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">Processing</label>
+              <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">طريقة المعالجة</label>
               <div className="flex flex-wrap gap-2">
                 {PROCESSING.map((p) => (
                   <button
@@ -111,7 +144,7 @@ export function BeanProfilePanel({ value, onChange }: Props) {
                         : "bg-surface-800 text-ink-300 border-surface-600 hover:border-emerald-700/60"
                     )}
                   >
-                    {p}
+                    {PROCESSING_AR[p]}
                   </button>
                 ))}
               </div>
@@ -119,7 +152,7 @@ export function BeanProfilePanel({ value, onChange }: Props) {
 
             {/* Roast */}
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">Roast Level</label>
+              <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">درجة التحميص</label>
               <div className="flex flex-wrap gap-2">
                 {ROASTS.map((r) => (
                   <button
@@ -132,7 +165,7 @@ export function BeanProfilePanel({ value, onChange }: Props) {
                         : "bg-surface-800 text-ink-300 border-surface-600 hover:border-amber-700/60"
                     )}
                   >
-                    {r}
+                    {ROAST_AR[r]}
                   </button>
                 ))}
               </div>
@@ -141,7 +174,7 @@ export function BeanProfilePanel({ value, onChange }: Props) {
 
           {/* Flavor Notes */}
           <div className="space-y-2">
-            <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">Flavor Notes</label>
+            <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">ملاحظات النكهة</label>
             <div className="flex flex-wrap gap-2">
               {FLAVOR_NOTES.map((note) => (
                 <button
@@ -151,7 +184,7 @@ export function BeanProfilePanel({ value, onChange }: Props) {
                     (value.flavorNotes || []).includes(note) ? "tag-active" : "tag-inactive"
                   )}
                 >
-                  {note}
+                  {FLAVOR_AR[note]}
                 </button>
               ))}
             </div>
@@ -162,7 +195,7 @@ export function BeanProfilePanel({ value, onChange }: Props) {
               onClick={() => onChange({ origin: "", altitude: "", processing: "", roast: "", flavorNotes: [] })}
               className="text-xs text-ink-400 hover:text-ink-100 underline transition-colors"
             >
-              Clear bean profile
+              مسح ملف الحبة
             </button>
           )}
         </div>

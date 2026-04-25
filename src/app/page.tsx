@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Copy, Share2, ArrowRight, Droplets, Coffee, BookmarkPlus, Check } from "lucide-react";
+import { Copy, Share2, ArrowLeft, Droplets, Coffee, BookmarkPlus, Check } from "lucide-react";
 import { RatioSelector } from "@/components/ratio-selector";
 import { BrewModeToggle } from "@/components/brew-mode-toggle";
 import { BeanProfilePanel } from "@/components/bean-profile-panel";
@@ -70,8 +70,8 @@ export default function HomePage() {
   function handleCopy() {
     if (!calculation) return;
     const text = brewMode === "iced"
-      ? `Coffee: ${calculation.coffee}g | Brew water: ${calculation.brewWater}ml | Ice: ${calculation.iceWater}ml | Ratio 1:${ratioNum}`
-      : `Coffee: ${calculation.coffee}g | Water: ${calculation.water}ml | Ratio 1:${ratioNum}`;
+      ? `قهوة: ${calculation.coffee}غ | ماء التحضير: ${calculation.brewWater}مل | ثلج: ${calculation.iceWater}مل | نسبة 1:${ratioNum}`
+      : `قهوة: ${calculation.coffee}غ | ماء: ${calculation.water}مل | نسبة 1:${ratioNum}`;
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
@@ -109,8 +109,8 @@ export default function HomePage() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-ink-100">V60 Calculator</h1>
-        <p className="text-ink-400 text-sm mt-0.5">Enter water or coffee amount to get started</p>
+        <h1 className="text-2xl font-bold text-ink-100">حاسبة V60</h1>
+        <p className="text-ink-400 text-sm mt-0.5">أدخل كمية الماء أو القهوة للبدء</p>
       </div>
 
       <BrewModeToggle value={brewMode} onChange={setBrewMode} />
@@ -120,7 +120,7 @@ export default function HomePage() {
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-ink-300 uppercase tracking-wide flex items-center gap-1.5">
               <Droplets size={12} className="text-sky-400" />
-              Water (ml)
+              الماء (مل)
             </label>
             <input
               type="number"
@@ -134,7 +134,7 @@ export default function HomePage() {
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-ink-300 uppercase tracking-wide flex items-center gap-1.5">
               <Coffee size={12} className="text-accent-500" />
-              Coffee (g)
+              القهوة (غ)
             </label>
             <input
               type="number"
@@ -150,19 +150,19 @@ export default function HomePage() {
         {brewMode === "iced" && waterNum > 0 && (
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-sky-950/30 border border-sky-800/30 rounded-xl p-3 text-center">
-              <div className="text-sky-300 font-bold text-xl">{Math.round(waterNum * 0.6)} ml</div>
-              <div className="text-sky-600 text-xs mt-0.5">Brew water (60%)</div>
+              <div className="text-sky-300 font-bold text-xl">{Math.round(waterNum * 0.6)} مل</div>
+              <div className="text-sky-600 text-xs mt-0.5">ماء التحضير (60%)</div>
             </div>
             <div className="bg-cyan-950/30 border border-cyan-800/30 rounded-xl p-3 text-center">
-              <div className="text-cyan-300 font-bold text-xl">{Math.round(waterNum * 0.4)} ml</div>
-              <div className="text-cyan-700 text-xs mt-0.5">Ice (40%)</div>
+              <div className="text-cyan-300 font-bold text-xl">{Math.round(waterNum * 0.4)} مل</div>
+              <div className="text-cyan-700 text-xs mt-0.5">ثلج (40%)</div>
             </div>
           </div>
         )}
       </div>
 
       <div className="card p-5 space-y-3">
-        <h2 className="text-sm font-semibold text-ink-300 uppercase tracking-wide">Coffee : Water Ratio</h2>
+        <h2 className="text-sm font-semibold text-ink-300 uppercase tracking-wide">نسبة القهوة إلى الماء</h2>
         <RatioSelector
           value={ratio}
           customValue={customRatio}
@@ -177,7 +177,7 @@ export default function HomePage() {
         <div className="space-y-3">
           <RecommendationCard rec={recommendation} />
           <button onClick={applyRecommendedRatio} className="w-full btn-secondary text-sm">
-            Apply recommended ratio ({recommendation.ratio})
+            تطبيق النسبة الموصى بها ({recommendation.ratio})
           </button>
         </div>
       )}
@@ -185,30 +185,30 @@ export default function HomePage() {
       {calculation && (
         <div className="card p-5 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold text-ink-100">Your Brew</h2>
+            <h2 className="font-semibold text-ink-100">تحضيرك</h2>
             <span className="text-xs bg-surface-700 text-ink-400 rounded-full px-2 py-1">
-              1:{ratioNum} ratio
+              نسبة 1:{ratioNum}
             </span>
           </div>
 
           <div className="grid grid-cols-3 gap-3">
             <div className="bg-surface-900/80 rounded-xl p-3 text-center">
-              <div className="text-accent-400 font-bold text-xl">{calculation.coffee}g</div>
-              <div className="text-ink-400 text-xs mt-0.5">Coffee</div>
+              <div className="text-accent-400 font-bold text-xl">{calculation.coffee}غ</div>
+              <div className="text-ink-400 text-xs mt-0.5">قهوة</div>
             </div>
             <div className="bg-surface-900/80 rounded-xl p-3 text-center">
-              <div className="text-sky-400 font-bold text-xl">{calculation.brewWater}ml</div>
-              <div className="text-ink-400 text-xs mt-0.5">{brewMode === "iced" ? "Brew water" : "Water"}</div>
+              <div className="text-sky-400 font-bold text-xl">{calculation.brewWater}مل</div>
+              <div className="text-ink-400 text-xs mt-0.5">{brewMode === "iced" ? "ماء التحضير" : "ماء"}</div>
             </div>
             {brewMode === "iced" ? (
               <div className="bg-surface-900/80 rounded-xl p-3 text-center">
-                <div className="text-cyan-400 font-bold text-xl">{calculation.iceWater}ml</div>
-                <div className="text-ink-400 text-xs mt-0.5">Ice</div>
+                <div className="text-cyan-400 font-bold text-xl">{calculation.iceWater}مل</div>
+                <div className="text-ink-400 text-xs mt-0.5">ثلج</div>
               </div>
             ) : (
               <div className="bg-surface-900/80 rounded-xl p-3 text-center">
                 <div className="text-ink-200 font-bold text-xl">{calculation.totalBrewTime}</div>
-                <div className="text-ink-400 text-xs mt-0.5">Brew time</div>
+                <div className="text-ink-400 text-xs mt-0.5">وقت التحضير</div>
               </div>
             )}
           </div>
@@ -216,12 +216,12 @@ export default function HomePage() {
           <div className="flex gap-2 flex-wrap">
             <button onClick={handleGoToRecipe} className="btn-primary flex items-center gap-2 flex-1">
               <Coffee size={16} />
-              View Recipe
-              <ArrowRight size={14} />
+              عرض الوصفة
+              <ArrowLeft size={14} />
             </button>
             <button onClick={handleCopy} className="btn-secondary flex items-center gap-2">
               {copied ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
-              {copied ? "Copied!" : "Copy"}
+              {copied ? "تم النسخ!" : "نسخ"}
             </button>
             <button onClick={handleShare} className="btn-ghost flex items-center gap-2">
               <Share2 size={16} />
@@ -234,7 +234,7 @@ export default function HomePage() {
               className="w-full flex items-center justify-center gap-2 py-2 text-sm text-ink-400 hover:text-ink-100 border border-surface-600 hover:border-accent-500/50 rounded-xl transition-all"
             >
               {beanSaved ? <Check size={15} className="text-emerald-400" /> : <BookmarkPlus size={15} />}
-              {beanSaved ? "Bean saved!" : "Save bean profile"}
+              {beanSaved ? "تم حفظ الحبة!" : "حفظ ملف الحبة"}
             </button>
           )}
         </div>

@@ -5,11 +5,11 @@ import { Calculator, BookOpen, BarChart2, Settings, Coffee } from "lucide-react"
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
-  { href: "/", label: "Brew", icon: Calculator },
-  { href: "/recipe", label: "Recipe", icon: Coffee },
-  { href: "/guide", label: "Guide", icon: BarChart2 },
-  { href: "/beans", label: "Beans", icon: BookOpen },
-  { href: "/settings", label: "Settings", icon: Settings },
+  { href: "/", label: "تحضير", icon: Calculator },
+  { href: "/recipe", label: "الوصفة", icon: Coffee },
+  { href: "/guide", label: "الدليل", icon: BarChart2 },
+  { href: "/beans", label: "الحبوب", icon: BookOpen },
+  { href: "/settings", label: "الإعدادات", icon: Settings },
 ];
 
 export function NavBar() {
@@ -69,7 +69,7 @@ export function NavBar() {
           </div>
           <span className="text-lg font-bold text-ink-100">Drip<span className="text-accent-500">Wise</span></span>
         </Link>
-        <span className="text-xs text-ink-400">V60 Calculator</span>
+        <span className="text-xs text-ink-400">حاسبة V60</span>
       </header>
     </>
   );

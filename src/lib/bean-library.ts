@@ -9,7 +9,7 @@ export const BEAN_LIBRARY: BeanLibraryEntry[] = [
     processing: "Washed",
     roast: "Light",
     flavorNotes: ["Floral", "Citrus", "Berry", "Fruity"],
-    description: "The birthplace of coffee. Yirgacheffe washed lots are celebrated for their tea-like clarity, jasmine florals, and bright lemon-citrus acidity.",
+    description: "مسقط رأس القهوة. تشتهر أصناف يرغاشيفي المغسولة بصفائها كالشاي وعطورها الياسمينية وحموضتها الليمونية المشرقة.",
     typicalRatio: "1:15–1:16",
   },
   {
@@ -20,7 +20,7 @@ export const BEAN_LIBRARY: BeanLibraryEntry[] = [
     processing: "Natural",
     roast: "Light",
     flavorNotes: ["Berry", "Wine-like", "Fruity", "Tropical"],
-    description: "Natural-processed Sidama delivers explosive blueberry and strawberry jam flavors with a wine-like fermented sweetness.",
+    description: "تقدم سيداما المعالجة طبيعياً نكهات عنبية وفراولة مربى انفجارية مع حلاوة مخمرة كالنبيذ.",
     typicalRatio: "1:15",
   },
   {
@@ -31,7 +31,7 @@ export const BEAN_LIBRARY: BeanLibraryEntry[] = [
     processing: "Washed",
     roast: "Light",
     flavorNotes: ["Berry", "Citrus", "Stone Fruit", "Wine-like"],
-    description: "Kenya AA is famous for its bold, blackcurrant acidity and complex stone fruit sweetness with a winey, syrupy finish.",
+    description: "تشتهر Kenya AA بحموضتها الجريئة كالكشمش الأسود وحلاوتها المعقدة كفاكهة الحجر مع نهاية كالنبيذ والشراب.",
     typicalRatio: "1:15–1:16",
   },
   {
@@ -42,7 +42,7 @@ export const BEAN_LIBRARY: BeanLibraryEntry[] = [
     processing: "Washed",
     roast: "Medium-Light",
     flavorNotes: ["Caramel", "Stone Fruit", "Citrus", "Chocolate"],
-    description: "Huila sits in Colombia's coffee heartland. Expect well-rounded caramel sweetness, red apple acidity, and a smooth, chocolatey finish.",
+    description: "تقع هويلا في قلب منطقة القهوة في كولومبيا. توقع حلاوة كراميل متوازنة وحموضة تفاح أحمر ونهاية ناعمة شوكولاتية.",
     typicalRatio: "1:14–1:15",
   },
   {
@@ -53,7 +53,7 @@ export const BEAN_LIBRARY: BeanLibraryEntry[] = [
     processing: "Natural",
     roast: "Medium",
     flavorNotes: ["Chocolate", "Nutty", "Caramel"],
-    description: "Brazil's largest growing region produces reliable, low-acid naturals with deep nutty-chocolate sweetness — a classic espresso base.",
+    description: "أكبر مناطق إنتاج القهوة في البرازيل تنتج طبيعيات منخفضة الحموضة بحلاوة مكسرات وشوكولاتة عميقة — قاعدة Espresso الكلاسيكية.",
     typicalRatio: "1:13–1:14",
   },
   {
@@ -64,7 +64,7 @@ export const BEAN_LIBRARY: BeanLibraryEntry[] = [
     processing: "Natural",
     roast: "Medium-Light",
     flavorNotes: ["Wine-like", "Chocolate", "Spicy", "Fruity"],
-    description: "One of the world's oldest coffees. Wild-fermented naturals with complex spice, dark chocolate, and a distinctive wine-like depth.",
+    description: "من أقدم القهوات في العالم. طبيعيات مخمرة برياً بتوابل معقدة وشوكولاتة داكنة وعمق كالنبيذ.",
     typicalRatio: "1:14–1:15",
   },
   {
@@ -75,7 +75,7 @@ export const BEAN_LIBRARY: BeanLibraryEntry[] = [
     processing: "Washed",
     roast: "Medium",
     flavorNotes: ["Chocolate", "Caramel", "Spicy", "Nutty"],
-    description: "Grown in Antigua's volcanic valleys. Well-structured with bittersweet chocolate, brown sugar, and a subtle spicy complexity.",
+    description: "تُزرع في وديان أنتيغوا البركانية. منظمة مع شوكولاتة مرة وسكر بني وتعقيد توابل خفي.",
     typicalRatio: "1:14",
   },
   {
@@ -86,7 +86,7 @@ export const BEAN_LIBRARY: BeanLibraryEntry[] = [
     processing: "Honey",
     roast: "Medium-Light",
     flavorNotes: ["Caramel", "Stone Fruit", "Citrus", "Tropical"],
-    description: "Honey-processed Tarrazú is a gateway to specialty coffee — sweet, clean, and balanced with ripe peach and golden caramel.",
+    description: "معالجة عسلية Tarrazú هي البوابة لقهوة المتخصصين — حلوة ونظيفة ومتوازنة مع خوخ ناضج وكراميل ذهبي.",
     typicalRatio: "1:15",
   },
   {
@@ -97,7 +97,7 @@ export const BEAN_LIBRARY: BeanLibraryEntry[] = [
     processing: "Washed",
     roast: "Light",
     flavorNotes: ["Floral", "Tropical", "Citrus", "Fruity"],
-    description: "The world's most coveted variety. Geisha's extraordinary perfume, delicate jasmine florals, and tropical fruit complexity are unmatched.",
+    description: "الصنف الأكثر قيمة في العالم. عطر Geisha الاستثنائي وزهوره الياسمينية الرقيقة وتعقيد الفاكهة الاستوائية لا مثيل لها.",
     typicalRatio: "1:15–1:16",
   },
   {
@@ -108,7 +108,7 @@ export const BEAN_LIBRARY: BeanLibraryEntry[] = [
     processing: "Washed",
     roast: "Light",
     flavorNotes: ["Berry", "Floral", "Citrus", "Caramel"],
-    description: "Rwanda's high-altitude Bourbon trees produce coffees of remarkable sweetness — bright red fruit, hibiscus florals, and honey-sweet finish.",
+    description: "تنتج أشجار Bourbon عالية الارتفاع في رواندا قهواتٍ بحلاوة مميزة — فاكهة حمراء مشرقة وزهور الكركديه ونهاية عسلية.",
     typicalRatio: "1:15–1:16",
   },
   {
@@ -119,7 +119,7 @@ export const BEAN_LIBRARY: BeanLibraryEntry[] = [
     processing: "Wet-Hulled",
     roast: "Medium-Dark",
     flavorNotes: ["Earthy", "Chocolate", "Spicy", "Nutty"],
-    description: "Classic Sumatran wet-hulled processing delivers full-bodied, earthy depth with dark chocolate and cedar spice.",
+    description: "المعالجة المقشورة الرطبة الكلاسيكية لسومطرة تمنح عمقاً ترابياً مكتمل القوام مع شوكولاتة داكنة وتوابل أرزية.",
     typicalRatio: "1:13–1:14",
   },
   {
@@ -130,7 +130,7 @@ export const BEAN_LIBRARY: BeanLibraryEntry[] = [
     processing: "Anaerobic",
     roast: "Light",
     flavorNotes: ["Tropical", "Wine-like", "Fruity", "Berry"],
-    description: "Anaerobic fermentation amplifies Panama's already exotic flavors into a kaleidoscope of tropical fruits and fermented sweetness.",
+    description: "التخمر اللاهوائي يضخم نكهات بنما الغريبة أصلاً إلى طيف من الفواكه الاستوائية والحلاوة المخمرة.",
     typicalRatio: "1:14–1:15",
   },
 ];

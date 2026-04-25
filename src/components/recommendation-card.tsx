@@ -13,27 +13,27 @@ export function RecommendationCard({ rec }: Props) {
         <div className="w-6 h-6 rounded-full bg-accent-500/20 flex items-center justify-center">
           <span className="text-accent-400 text-xs">✦</span>
         </div>
-        <h3 className="font-semibold text-accent-400 text-sm tracking-wide uppercase">Smart Recommendation</h3>
+        <h3 className="font-semibold text-accent-400 text-sm tracking-wide uppercase">توصية ذكية</h3>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="bg-surface-900/80 rounded-xl p-3 space-y-1 text-center">
           <div className="text-accent-500 font-bold text-lg">{rec.ratio}</div>
-          <div className="text-ink-400 text-xs">Ratio</div>
+          <div className="text-ink-400 text-xs">النسبة</div>
         </div>
         <div className="bg-surface-900/80 rounded-xl p-3 space-y-1 text-center">
           <div className="flex items-center justify-center gap-1">
             <Thermometer size={14} className="text-orange-400" />
             <span className="text-ink-100 font-bold text-sm">{rec.waterTemp}</span>
           </div>
-          <div className="text-ink-400 text-xs">Water Temp</div>
+          <div className="text-ink-400 text-xs">حرارة الماء</div>
         </div>
         <div className="bg-surface-900/80 rounded-xl p-3 space-y-1 text-center">
           <div className="flex items-center justify-center gap-1">
             <Layers size={14} className="text-sky-400" />
             <span className="text-ink-100 font-bold text-sm">{rec.grindSize}</span>
           </div>
-          <div className="text-ink-400 text-xs">Grind</div>
+          <div className="text-ink-400 text-xs">الطحن</div>
         </div>
         <div className="bg-surface-900/80 rounded-xl p-3 space-y-1 text-center">
           <div className="flex items-center justify-center gap-1">

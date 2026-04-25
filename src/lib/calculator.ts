@@ -30,27 +30,27 @@ export function getBeanRecommendation(bean: BeanProfile): BrewRecommendation {
     ratioNumber = 15;
     tempMin = 93; tempMax = 96;
     grindSize = "Medium-Fine";
-    flavorTip = "Light roasts shine with higher water ratios and hotter water to unlock complex brightness.";
+    flavorTip = "تُبهر حبوب التحميص الفاتح بنسب ماء أعلى وماء أسخن لإطلاق الإشراق المعقد.";
   } else if (roast === "Medium-Light") {
     ratioNumber = 15;
     tempMin = 92; tempMax = 94;
     grindSize = "Medium-Fine";
-    flavorTip = "A balanced approach — lean slightly hotter to draw out the delicate sweetness.";
+    flavorTip = "نهج متوازن — ميل طفيف نحو الحرارة الأعلى لاستخلاص الحلاوة الرقيقة.";
   } else if (roast === "Medium") {
     ratioNumber = 14;
     tempMin = 91; tempMax = 93;
     grindSize = "Medium";
-    flavorTip = "Medium roasts are forgiving. Focus on even pours to highlight balanced sweetness and body.";
+    flavorTip = "التحميص المتوسط متسامح. ركّز على السكبات المتساوية لإبراز الحلاوة والقوام المتوازنَين.";
   } else if (roast === "Medium-Dark") {
     ratioNumber = 13;
     tempMin = 89; tempMax = 92;
     grindSize = "Medium";
-    flavorTip = "Slightly cooler water prevents bitterness while preserving rich body and chocolate notes.";
+    flavorTip = "الماء الأبرد قليلاً يمنع المرارة مع الحفاظ على القوام الغني ونكهات الشوكولاتة.";
   } else if (roast === "Dark") {
     ratioNumber = 13;
     tempMin = 88; tempMax = 91;
     grindSize = "Medium";
-    flavorTip = "Cooler water and a lower ratio tame harshness and bring out dark chocolate and caramel sweetness.";
+    flavorTip = "الماء الأبرد ونسبة أقل يلطّفان الحدّة ويُبرزان حلاوة الشوكولاتة الداكنة والكراميل.";
   }
 
   // Altitude adjustment
@@ -60,7 +60,7 @@ export function getBeanRecommendation(bean: BeanProfile): BrewRecommendation {
     tempMax = Math.min(tempMax + 1, 97);
     if (roast === "Light" || roast === "Medium-Light") {
       ratioNumber = Math.min(ratioNumber + 1, 16);
-      flavorTip = "High-altitude beans are dense with vibrant acidity — go higher ratio and slightly hotter for full extraction.";
+      flavorTip = "حبوب المرتفعات العالية كثيفة مع حموضة نابضة — اذهب لنسبة أعلى وماء أسخن قليلاً لاستخلاص كامل.";
     }
   } else if (altitude === "Below 1000m") {
     // Less dense, lower altitude — be careful not to over-extract
@@ -72,22 +72,22 @@ export function getBeanRecommendation(bean: BeanProfile): BrewRecommendation {
   if (processing === "Natural") {
     bloomTime = 50;
     if (roast === "Light" || roast === "Medium-Light") {
-      flavorTip = "Natural process creates fruity, wine-like complexity. Extended bloom releases trapped CO2 for even extraction.";
+      flavorTip = "المعالجة الطبيعية تخلق تعقيداً فاكهياً كالنبيذ. التفتيح الممتد يحرر ثاني أكسيد الكربون لاستخلاص متساوٍ.";
     }
   } else if (processing === "Anaerobic") {
     bloomTime = 50;
     ratioNumber = Math.min(ratioNumber, 14);
     tempMin = Math.max(tempMin - 1, 88);
     tempMax = Math.max(tempMax - 1, 92);
-    flavorTip = "Anaerobic fermentation creates intense, layered flavors. Careful temperature control prevents over-extraction of wild notes.";
+    flavorTip = "التخمر اللاهوائي يخلق نكهات مكثفة ومتعددة الطبقات. التحكم الدقيق بالحرارة يمنع الاستخلاص المفرط للنكهات البرية.";
   } else if (processing === "Honey") {
     ratioNumber = Math.min(ratioNumber, 15);
-    flavorTip = "Honey process balances clean clarity with natural sweetness — a medium ratio lets both aspects shine.";
+    flavorTip = "المعالجة العسلية توازن بين الصفاء النظيف والحلاوة الطبيعية — نسبة متوسطة تتيح لكلا الجانبين التألق.";
   } else if (processing === "Wet-Hulled") {
     tempMin = Math.max(tempMin - 1, 88);
     tempMax = Math.max(tempMax - 1, 91);
     grindSize = "Medium";
-    flavorTip = "Wet-hulled processing creates earthy, syrupy body. Slightly cooler water avoids muddying the cup.";
+    flavorTip = "المعالجة المقشورة الرطبة تخلق قواماً ترابياً كثيفاً. الماء الأبرد قليلاً يمنع تعكّر الكوب.";
   }
 
   return {
@@ -127,7 +127,7 @@ export function buildBrewRecipe(
   elapsed += bloomTime;
 
   // Three pours
-  const pourLabels = ["1st Pour", "2nd Pour", "3rd Pour"];
+  const pourLabels = ["السكبة الأولى", "السكبة الثانية", "السكبة الثالثة"];
   let cumulativeWater = bloomAmount;
   for (let i = 0; i < 3; i++) {
     const amt = i < 2 ? pourAmount : brewWater - bloomAmount - pourAmount * 2;

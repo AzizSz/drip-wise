@@ -21,7 +21,7 @@ export function BrewModeToggle({ value, onChange }: Props) {
         )}
       >
         <Flame size={15} />
-        Hot
+        ساخن
       </button>
       <button
         onClick={() => onChange("iced")}
@@ -33,7 +33,7 @@ export function BrewModeToggle({ value, onChange }: Props) {
         )}
       >
         <Snowflake size={15} />
-        Iced
+        مثلج
       </button>
     </div>
   );

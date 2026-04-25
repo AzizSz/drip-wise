@@ -65,15 +65,15 @@ export function BrewTimer({ steps }: Props) {
         </div>
         <div className="text-ink-400 text-sm mt-1">
           {elapsed >= totalDuration
-            ? "Brew complete! ☕"
-            : `Step ${activeStepIndex + 1} of ${steps.length}: ${steps[activeStepIndex]?.label}`}
+            ? "اكتمل التحضير! ☕"
+            : `الخطوة ${activeStepIndex + 1} من ${steps.length}: ${steps[activeStepIndex]?.label}`}
         </div>
       </div>
 
       {/* Step progress bar */}
       <div className="space-y-1">
         <div className="flex justify-between text-xs text-ink-400">
-          <span>Step progress</span>
+          <span>تقدم الخطوة</span>
           <span>{Math.round(stepProgress * 100)}%</span>
         </div>
         <div className="h-2 bg-surface-700 rounded-full overflow-hidden">
@@ -97,7 +97,7 @@ export function BrewTimer({ steps }: Props) {
         <button
           onClick={reset}
           className="w-10 h-10 rounded-full bg-surface-700 flex items-center justify-center hover:bg-surface-600 transition-all"
-          title="Reset"
+          title="إعادة تعيين"
         >
           <RotateCcw size={16} className="text-ink-300" />
         </button>
@@ -113,7 +113,7 @@ export function BrewTimer({ steps }: Props) {
         >
           {running
             ? <Pause size={22} className="text-white" />
-            : <Play size={22} className="text-white ml-0.5" />
+            : <Play size={22} className="text-white mr-0.5" />
           }
         </button>
 
@@ -121,7 +121,7 @@ export function BrewTimer({ steps }: Props) {
           onClick={skipStep}
           disabled={activeStepIndex >= steps.length - 1}
           className="w-10 h-10 rounded-full bg-surface-700 flex items-center justify-center hover:bg-surface-600 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-          title="Skip step"
+          title="تخطي الخطوة"
         >
           <SkipForward size={16} className="text-ink-300" />
         </button>

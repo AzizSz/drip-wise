@@ -52,12 +52,12 @@ export function RecipeSteps({ steps, activeStep }: Props) {
               <div className="flex items-center gap-3 mt-1">
                 <div className="flex items-center gap-1 text-sky-400 text-sm">
                   <Droplets size={13} />
-                  <span className="font-medium">{step.amount} ml</span>
+                  <span className="font-medium">{step.amount} مل</span>
                 </div>
                 <span className="text-ink-500 text-xs">·</span>
-                <span className="text-ink-400 text-xs">Total: {step.totalWater} ml</span>
+                <span className="text-ink-400 text-xs">المجموع: {step.totalWater} مل</span>
                 <span className="text-ink-500 text-xs">·</span>
-                <span className="text-ink-400 text-xs">{step.duration}s wait</span>
+                <span className="text-ink-400 text-xs">انتظار {step.duration}ث</span>
               </div>
             </div>
           </div>
