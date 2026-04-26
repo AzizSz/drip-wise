@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Copy, Share2, ArrowLeft, Droplets, Coffee, BookmarkPlus, Check, FlaskConical } from "lucide-react";
+import { Copy, Share2, ArrowLeft, Droplets, Coffee, BookmarkPlus, Check, FlaskConical, Stethoscope } from "lucide-react";
 import { RatioSelector } from "@/components/ratio-selector";
 import { BrewModeToggle } from "@/components/brew-mode-toggle";
 import { BeanProfilePanel } from "@/components/bean-profile-panel";
@@ -11,11 +11,59 @@ import {
   calcFromWater, calcFromCoffee, getBeanRecommendation, buildBrewCalculation,
 } from "@/lib/calculator";
 import { encodeShareUrl, saveLastCalc, saveBean, getSettings } from "@/lib/storage";
+import { cn } from "@/lib/utils";
 
 const RATIO_MAP: Record<Exclude<RatioOption, "custom">, number> = {
   "1:10": 10, "1:12": 12, "1:13": 13, "1:14": 14,
   "1:15": 15, "1:16": 16, "1:17": 17,
 };
+
+type Symptom = "مرّ" | "حامض جداً" | "خفيف/مويه" | "قوي جداً" | "عكر/مبهم" | "بلا نكهة" | "قابض/جافّ" | "حلو ومتوازن ✓";
+
+const DIAGNOSES: Record<Symptom, { cause: string; fixes: string[]; color: string; bg: string; border: string }> = {
+  "مرّ": {
+    cause: "استخلاص زايد (Over-extraction)",
+    fixes: ["خشّن الطحنة درجة", "قلل درجة الحرارة 1-2°C", "قصّر وقت التصفية", "جرب ريشيو أعلى (1:15 بدل 1:13)"],
+    color: "text-red-400", bg: "bg-red-950/30", border: "border-red-800/40",
+  },
+  "حامض جداً": {
+    cause: "استخلاص ناقص (Under-extraction)",
+    fixes: ["نعّم الطحنة درجة", "ارفع درجة الحرارة 1-2°C", "طوّل وقت البلوم", "جرب ريشيو أقل (1:13 بدل 1:15)"],
+    color: "text-yellow-400", bg: "bg-yellow-950/30", border: "border-yellow-800/40",
+  },
+  "خفيف/مويه": {
+    cause: "القهوة ضعيفة — تركيز منخفض",
+    fixes: ["زد كمية القهوة (جرب 1:13)", "نعّم الطحنة قليلاً", "تأكد من وزن القهوة بدقة"],
+    color: "text-yellow-400", bg: "bg-yellow-950/30", border: "border-yellow-800/40",
+  },
+  "قوي جداً": {
+    cause: "التركيز عالي",
+    fixes: ["زد كمية الماء (جرب 1:16)", "خشّن الطحنة قليلاً"],
+    color: "text-red-400", bg: "bg-red-950/30", border: "border-red-800/40",
+  },
+  "عكر/مبهم": {
+    cause: "فاين زايد أو الفلتر ما انشطف",
+    fixes: ["اشطف الفلتر قبل التحضير", "خشّن الطحنة", "تأكد الفلتر مضبوط في الـ V60"],
+    color: "text-orange-400", bg: "bg-orange-950/30", border: "border-orange-800/40",
+  },
+  "بلا نكهة": {
+    cause: "تحت-استخلاص أو قهوة قديمة",
+    fixes: ["تحقق من تاريخ التحميص (أحسن خلال 2-4 أسابيع)", "نعّم الطحنة", "ارفع الحرارة"],
+    color: "text-yellow-400", bg: "bg-yellow-950/30", border: "border-yellow-800/40",
+  },
+  "قابض/جافّ": {
+    cause: "استخلاص زايد جداً أو حرارة عالية",
+    fixes: ["خفّض الحرارة 2-3°C", "خشّن الطحنة", "قلل وقت التصفية"],
+    color: "text-red-400", bg: "bg-red-950/30", border: "border-red-800/40",
+  },
+  "حلو ومتوازن ✓": {
+    cause: "استخلاص مثالي! 🎉",
+    fixes: ["سجّل وصفتك الحالية", "ما تحتاج تغيير شي"],
+    color: "text-emerald-400", bg: "bg-emerald-950/30", border: "border-emerald-800/40",
+  },
+};
+
+const SYMPTOMS = Object.keys(DIAGNOSES) as Symptom[];
 
 const EMPTY_BEAN: BeanProfile = { origin: "", altitude: "", processing: "", roast: "", flavorNotes: [] };
 
@@ -35,6 +83,8 @@ export default function HomePage() {
   const [brewedWaterInput, setBrewedWaterInput] = useState("");
   const [cupYieldInput, setCupYieldInput] = useState("");
   const [extractionResult, setExtractionResult] = useState<{ pct: number; status: string; color: string; advice: string } | null>(null);
+  const [diagnosisOpen, setDiagnosisOpen] = useState(false);
+  const [selectedSymptoms, setSelectedSymptoms] = useState<Symptom[]>([]);
 
   const ratioNum = ratio === "custom" ? customRatio : RATIO_MAP[ratio];
 
@@ -367,6 +417,81 @@ export default function HomePage() {
           )}
         </div>
       )}
+      <div className="card-premium overflow-hidden">
+        <button
+          onClick={() => setDiagnosisOpen(!diagnosisOpen)}
+          className="w-full flex items-center justify-between p-5 hover:bg-surface-700/30 transition-all"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-rose-950/60 border border-rose-800/40 flex items-center justify-center">
+              <Stethoscope size={15} className="text-rose-400" />
+            </div>
+            <div>
+              <p className="font-semibold text-ink-100">شخّص كوبك</p>
+              <p className="text-xs text-ink-400">اختر الأعراض وعرف وش المشكلة</p>
+            </div>
+          </div>
+          <span className="text-ink-400 text-lg">{diagnosisOpen ? "▲" : "▼"}</span>
+        </button>
+
+        {diagnosisOpen && (
+          <div className="px-5 pb-5 space-y-4 border-t border-surface-600/50">
+            <div className="pt-4 flex flex-wrap gap-2">
+              {SYMPTOMS.map((s) => {
+                const active = selectedSymptoms.includes(s);
+                return (
+                  <button
+                    key={s}
+                    onClick={() => setSelectedSymptoms((prev) =>
+                      prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]
+                    )}
+                    className={cn(
+                      "px-3 py-1.5 rounded-lg text-xs font-medium border transition-all",
+                      active
+                        ? s === "حلو ومتوازن ✓"
+                          ? "bg-emerald-950/60 text-emerald-300 border-emerald-700/60"
+                          : "bg-rose-950/60 text-rose-300 border-rose-700/60"
+                        : "bg-surface-800 text-ink-300 border-surface-600 hover:border-rose-700/40"
+                    )}
+                  >
+                    {s}
+                  </button>
+                );
+              })}
+            </div>
+
+            {selectedSymptoms.length > 0 && (
+              <div className="space-y-3">
+                {selectedSymptoms.map((s) => {
+                  const d = DIAGNOSES[s];
+                  return (
+                    <div key={s} className={`rounded-xl border p-4 space-y-2 ${d.bg} ${d.border}`}>
+                      <div>
+                        <p className={`text-sm font-semibold ${d.color}`}>{s}</p>
+                        <p className="text-xs text-ink-400 mt-0.5">{d.cause}</p>
+                      </div>
+                      <ol className="space-y-1">
+                        {d.fixes.map((fix, i) => (
+                          <li key={i} className="flex items-start gap-2 text-xs text-ink-200">
+                            <span className={`shrink-0 font-bold ${d.color}`}>{i + 1}.</span>
+                            {fix}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                  );
+                })}
+                <button
+                  onClick={() => setSelectedSymptoms([])}
+                  className="text-xs text-ink-500 hover:text-ink-300 underline transition-colors"
+                >
+                  مسح الاختيارات
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
