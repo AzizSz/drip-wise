@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Copy, Share2, ArrowLeft, Droplets, Coffee, BookmarkPlus, Check, FlaskConical, Stethoscope, AlertTriangle } from "lucide-react";
+import { Copy, Share2, ArrowLeft, Droplets, Coffee, BookmarkPlus, Check, Stethoscope, AlertTriangle } from "lucide-react";
 import { RatioSelector } from "@/components/ratio-selector";
 import { BrewModeToggle } from "@/components/brew-mode-toggle";
 import { BeanProfilePanel } from "@/components/bean-profile-panel";
@@ -79,10 +79,6 @@ export default function HomePage() {
   const [copied, setCopied] = useState(false);
   const [beanSaved, setBeanSaved] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [extractionOpen, setExtractionOpen] = useState(false);
-  const [brewedWaterInput, setBrewedWaterInput] = useState("");
-  const [cupYieldInput, setCupYieldInput] = useState("");
-  const [extractionResult, setExtractionResult] = useState<{ pct: number; status: string; color: string; advice: string } | null>(null);
   const [diagnosisOpen, setDiagnosisOpen] = useState(false);
   const [selectedSymptoms, setSelectedSymptoms] = useState<Symptom[]>([]);
   const [showExtraction, setShowExtraction] = useState(false);
@@ -115,36 +111,12 @@ export default function HomePage() {
     }
   }, [coffee, ratioNum, lastEdited, mounted]);
 
-  function calcExtraction() {
-    const bw = parseFloat(brewedWaterInput);
-    const cy = parseFloat(cupYieldInput);
-    if (!bw || !cy || cy >= bw) return;
-    const absorbed = bw - cy;
-    const pct = Math.round((absorbed / coffeeNum) * 1000) / 10;
-    let status: string, color: string, advice: string;
-    if (pct < 18) {
-      status = "ناقص"; color = "text-red-400";
-      advice = "الاستخلاص ناقص — جرب: طحنة أنعم، درجة حرارة أعلى، أو صب أبطأ";
-    } else if (pct <= 22) {
-      status = "مثالي ✓"; color = "text-emerald-400";
-      advice = "استخلاص ممتاز! في النطاق المثالي 18-22%";
-    } else {
-      status = "زايد"; color = "text-amber-400";
-      advice = "الاستخلاص زايد — جرب: طحنة أخشن، درجة حرارة أقل، أو صب أسرع";
-    }
-    setExtractionResult({ pct, status, color, advice });
-  }
-
   const hasBeanData = !!(bean.origin || bean.roast || bean.processing);
   const recommendation = hasBeanData ? getBeanRecommendation(bean) : undefined;
 
   const bloomTime = recommendation?.bloomTime ?? 45;
   const coffeeNum = parseFloat(coffee) || 0;
   const waterNum = parseFloat(water) || 0;
-
-  useEffect(() => {
-    if (waterNum > 0) setBrewedWaterInput(String(waterNum));
-  }, [waterNum]);
 
   const calculation = coffeeNum > 0 && waterNum > 0
     ? buildBrewCalculation(coffeeNum, waterNum, ratioNum, brewMode, bloomTime, recommendation)
@@ -327,97 +299,6 @@ export default function HomePage() {
               {beanSaved ? <Check size={15} className="text-emerald-400" /> : <BookmarkPlus size={15} />}
               {beanSaved ? "تم حفظ الحبة!" : "حفظ ملف الحبة"}
             </button>
-          )}
-        </div>
-      )}
-      {calculation && (
-        <div className="card-premium overflow-hidden">
-          <button
-            onClick={() => setExtractionOpen(!extractionOpen)}
-            className="w-full flex items-center justify-between p-5 hover:bg-surface-700/30 transition-all"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-violet-950/60 border border-violet-800/40 flex items-center justify-center">
-                <FlaskConical size={15} className="text-violet-400" />
-              </div>
-              <div>
-                <p className="font-semibold text-ink-100">فاحص الاستخلاص</p>
-                <p className="text-xs text-ink-400">احسب نسبة الاستخلاص بناءً على ما طلع في كوبك</p>
-              </div>
-            </div>
-            <span className="text-ink-400 text-lg">{extractionOpen ? "▲" : "▼"}</span>
-          </button>
-
-          {extractionOpen && (
-            <div className="px-5 pb-5 space-y-4 border-t border-surface-600/50">
-              <div className="pt-4 grid grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">الماء اللي صببته (مل)</label>
-                  <input
-                    type="number"
-                    value={brewedWaterInput}
-                    onChange={(e) => setBrewedWaterInput(e.target.value)}
-                    className="input-field text-sm"
-                    min={0}
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">الماء اللي طلع في الكوب (مل)</label>
-                  <input
-                    type="number"
-                    value={cupYieldInput}
-                    onChange={(e) => setCupYieldInput(e.target.value)}
-                    placeholder="مثال: 250"
-                    className="input-field text-sm"
-                    min={0}
-                  />
-                </div>
-              </div>
-
-              <button
-                onClick={calcExtraction}
-                className="btn-primary w-full text-sm"
-              >
-                احسب
-              </button>
-
-              {extractionResult && (
-                <div className="space-y-3 pt-1">
-                  <div className="flex items-baseline gap-3">
-                    <span className={`text-4xl font-bold ${extractionResult.color}`}>
-                      {extractionResult.pct}%
-                    </span>
-                    <span className={`text-sm font-semibold ${extractionResult.color}`}>
-                      {extractionResult.status}
-                    </span>
-                  </div>
-
-                  {/* Visual bar */}
-                  <div className="space-y-1">
-                    <div className="relative h-3 rounded-full bg-surface-800 overflow-hidden">
-                      {/* Golden zone 18-22% within 0-30% range */}
-                      <div
-                        className="absolute top-0 h-full bg-emerald-900/60 border-x border-emerald-700/50"
-                        style={{ left: `${(18 / 30) * 100}%`, width: `${(4 / 30) * 100}%` }}
-                      />
-                      {/* Indicator */}
-                      <div
-                        className={`absolute top-0 h-full w-1 rounded-full ${extractionResult.pct < 18 ? "bg-red-400" : extractionResult.pct <= 22 ? "bg-emerald-400" : "bg-amber-400"}`}
-                        style={{ left: `${Math.min((extractionResult.pct / 30) * 100, 98)}%` }}
-                      />
-                    </div>
-                    <div className="flex justify-between text-[10px] text-ink-500">
-                      <span>0%</span>
-                      <span className="text-emerald-600">18-22%</span>
-                      <span>30%</span>
-                    </div>
-                  </div>
-
-                  <p className="text-sm text-ink-300 leading-relaxed">{extractionResult.advice}</p>
-                  <p className="text-[11px] text-ink-500">المعيار الذهبي SCA: 18-22% استخلاص</p>
-                </div>
-              )}
-            </div>
           )}
         </div>
       )}
