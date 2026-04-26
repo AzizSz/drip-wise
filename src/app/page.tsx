@@ -6,6 +6,7 @@ import { RatioSelector } from "@/components/ratio-selector";
 import { BrewModeToggle } from "@/components/brew-mode-toggle";
 import { BeanProfilePanel } from "@/components/bean-profile-panel";
 import { RecommendationCard } from "@/components/recommendation-card";
+import { WelcomeModal, QuickPresets } from "@/components/onboarding";
 import type { BrewMode, RatioOption, BeanProfile } from "@/lib/types";
 import {
   calcFromWater, calcFromCoffee, getBeanRecommendation, buildBrewCalculation,
@@ -163,6 +164,7 @@ export default function HomePage() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+      <WelcomeModal />
       <div>
         <h1 className="text-2xl font-bold text-ink-100">حاسبة V60</h1>
         <p className="text-ink-400 text-sm mt-0.5">أدخل كمية الماء أو القهوة للبدء</p>
@@ -172,6 +174,8 @@ export default function HomePage() {
       </div>
 
       <BrewModeToggle value={brewMode} onChange={setBrewMode} />
+
+      <QuickPresets water={water} setWater={setWater} setLastEdited={setLastEdited} />
 
       <div className="card p-5 space-y-5">
         <div className="grid grid-cols-2 gap-4">
