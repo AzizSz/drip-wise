@@ -151,16 +151,21 @@ export default function HomePage() {
         </div>
 
         {brewMode === "iced" && waterNum > 0 && (
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-sky-950/30 border border-sky-800/30 rounded-xl p-3 text-center">
-              <div className="text-sky-300 font-bold text-xl">{Math.round(waterNum * 0.6)} مل</div>
-              <div className="text-sky-600 text-xs mt-0.5">ماء التحضير (60%)</div>
+          <>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-sky-950/30 border border-sky-800/30 rounded-xl p-3 text-center">
+                <div className="text-sky-300 font-bold text-xl">{Math.round(waterNum * 0.5)} مل</div>
+                <div className="text-sky-600 text-xs mt-0.5">ماء التحضير (50%)</div>
+              </div>
+              <div className="bg-cyan-950/30 border border-cyan-800/30 rounded-xl p-3 text-center">
+                <div className="text-cyan-300 font-bold text-xl">{Math.round(waterNum * 0.5)} مل</div>
+                <div className="text-cyan-700 text-xs mt-0.5">ثلج (50%)</div>
+              </div>
             </div>
-            <div className="bg-cyan-950/30 border border-cyan-800/30 rounded-xl p-3 text-center">
-              <div className="text-cyan-300 font-bold text-xl">{Math.round(waterNum * 0.4)} مل</div>
-              <div className="text-cyan-700 text-xs mt-0.5">ثلج (40%)</div>
-            </div>
-          </div>
+            <p className="text-xs text-ink-400 text-center leading-relaxed">
+              الطحنة: أنعم درجة من الحار · وقت البلوم: 45-50 ث · الثلج يعوّض التبريد فوراً
+            </p>
+          </>
         )}
       </div>
 

@@ -19,76 +19,76 @@ export function formatTimestamp(seconds: number): string {
 export function getBeanRecommendation(bean: BeanProfile): BrewRecommendation {
   const { roast, altitude, processing } = bean;
   let ratioNumber = 14;
-  let tempMin = 91;
-  let tempMax = 93;
+  let tempMin = 91, tempMax = 93;
   let grindSize: BrewRecommendation["grindSize"] = "Medium-Fine";
   let bloomTime = 45;
-  let flavorTip = "";
+  const tips: string[] = [];
 
-  // Roast-based baseline
-  if (roast === "Light") {
-    ratioNumber = 15;
-    tempMin = 93; tempMax = 96;
-    grindSize = "Medium-Fine";
-    flavorTip = "تُبهر حبوب التحميص الفاتح بنسب ماء أعلى وماء أسخن لإطلاق الإشراق المعقد.";
-  } else if (roast === "Medium-Light") {
-    ratioNumber = 15;
-    tempMin = 92; tempMax = 94;
-    grindSize = "Medium-Fine";
-    flavorTip = "نهج متوازن — ميل طفيف نحو الحرارة الأعلى لاستخلاص الحلاوة الرقيقة.";
-  } else if (roast === "Medium") {
-    ratioNumber = 14;
-    tempMin = 91; tempMax = 93;
-    grindSize = "Medium";
-    flavorTip = "التحميص المتوسط متسامح. ركّز على السكبات المتساوية لإبراز الحلاوة والقوام المتوازنَين.";
-  } else if (roast === "Medium-Dark") {
-    ratioNumber = 13;
-    tempMin = 89; tempMax = 92;
-    grindSize = "Medium";
-    flavorTip = "الماء الأبرد قليلاً يمنع المرارة مع الحفاظ على القوام الغني ونكهات الشوكولاتة.";
-  } else if (roast === "Dark") {
-    ratioNumber = 13;
-    tempMin = 88; tempMax = 91;
-    grindSize = "Medium";
-    flavorTip = "الماء الأبرد ونسبة أقل يلطّفان الحدّة ويُبرزان حلاوة الشوكولاتة الداكنة والكراميل.";
+  if (roast === "Light")        { ratioNumber = 15; tempMin = 93; tempMax = 96; grindSize = "Medium-Fine"; }
+  if (roast === "Medium-Light") { ratioNumber = 15; tempMin = 92; tempMax = 94; grindSize = "Medium-Fine"; }
+  if (roast === "Medium")       { ratioNumber = 14; tempMin = 91; tempMax = 93; grindSize = "Medium"; }
+  if (roast === "Medium-Dark")  { ratioNumber = 13; tempMin = 89; tempMax = 92; grindSize = "Medium"; }
+  if (roast === "Dark") {
+    ratioNumber = 13; tempMin = 88; tempMax = 91; grindSize = "Medium";
+    tips.push("الماء الأبرد يمنع مرارة الحمص الغامق");
   }
 
-  // Altitude adjustment
-  if (altitude === "2000m+" || altitude === "1700-2000m") {
-    // Dense beans — benefit from slightly hotter water
-    tempMin = Math.min(tempMin + 1, 96);
-    tempMax = Math.min(tempMax + 1, 97);
-    if (roast === "Light" || roast === "Medium-Light") {
-      ratioNumber = Math.min(ratioNumber + 1, 16);
-      flavorTip = "حبوب المرتفعات العالية كثيفة مع حموضة نابضة — اذهب لنسبة أعلى وماء أسخن قليلاً لاستخلاص كامل.";
-    }
-  } else if (altitude === "Below 1000m") {
-    // Less dense, lower altitude — be careful not to over-extract
-    tempMin = Math.max(tempMin - 1, 88);
-    tempMax = Math.max(tempMax - 1, 90);
+  if (processing === "Washed") {
+    tempMin = Math.min(tempMin + 1, 96); tempMax = Math.min(tempMax + 1, 97); bloomTime = 35;
+    tips.push("مغسول: حموضة نظيفة — زد الحرارة قليلاً لتبرزها");
   }
-
-  // Processing adjustment
   if (processing === "Natural") {
-    bloomTime = 50;
-    if (roast === "Light" || roast === "Medium-Light") {
-      flavorTip = "المعالجة الطبيعية تخلق تعقيداً فاكهياً كالنبيذ. التفتيح الممتد يحرر ثاني أكسيد الكربون لاستخلاص متساوٍ.";
-    }
-  } else if (processing === "Anaerobic") {
-    bloomTime = 50;
-    ratioNumber = Math.min(ratioNumber, 14);
-    tempMin = Math.max(tempMin - 1, 88);
-    tempMax = Math.max(tempMax - 1, 92);
-    flavorTip = "التخمر اللاهوائي يخلق نكهات مكثفة ومتعددة الطبقات. التحكم الدقيق بالحرارة يمنع الاستخلاص المفرط للنكهات البرية.";
-  } else if (processing === "Honey") {
-    ratioNumber = Math.min(ratioNumber, 15);
-    flavorTip = "المعالجة العسلية توازن بين الصفاء النظيف والحلاوة الطبيعية — نسبة متوسطة تتيح لكلا الجانبين التألق.";
-  } else if (processing === "Wet-Hulled") {
-    tempMin = Math.max(tempMin - 1, 88);
-    tempMax = Math.max(tempMax - 1, 91);
-    grindSize = "Medium";
-    flavorTip = "المعالجة المقشورة الرطبة تخلق قواماً ترابياً كثيفاً. الماء الأبرد قليلاً يمنع تعكّر الكوب.";
+    bloomTime = 50; ratioNumber = Math.min(ratioNumber + 1, 16);
+    tips.push("طبيعي: bloom 45-50 ثانية بسبب CO2 الزائد — تجنب الاستخلاص المفرط");
   }
+  if (processing === "Honey") {
+    tempMin = Math.max(tempMin - 1, 88); tempMax = Math.max(tempMax - 1, 93); bloomTime = 42;
+    tips.push("عسلي: حلو ومتوازن — تجنب الإفراط في الاستخلاص");
+  }
+  if (processing === "Anaerobic") {
+    bloomTime = 50; ratioNumber = Math.min(ratioNumber, 14);
+    tempMin = Math.max(tempMin - 1, 88); tempMax = Math.max(tempMax - 1, 92);
+    tips.push("لاهوائي: bloom طويل وحرارة منضبطة لتجنب الطعم المخمّر");
+  }
+  if (processing === "Wet-Hulled") {
+    ratioNumber = Math.max(ratioNumber - 1, 12);
+    tempMin = Math.max(tempMin - 2, 86); tempMax = Math.max(tempMax - 2, 90);
+    grindSize = "Medium"; bloomTime = 32;
+    tips.push("مقشور رطب: جسم ثقيل — ريشيو أقل وحرارة أبرد للتوازن");
+  }
+
+  if (altitude === "2000m+") {
+    tempMin = Math.min(tempMin + 2, 97); tempMax = Math.min(tempMax + 2, 97);
+    tips.push("فوق 2000م: حبوب كثيفة جداً — زد الحرارة لاستخلاص كامل");
+  }
+  if (altitude === "1700-2000m") {
+    tempMin = Math.min(tempMin + 1, 96); tempMax = Math.min(tempMax + 1, 97);
+    tips.push("1700-2000م: ارتفاع عالٍ — حرارة أعلى قليلاً للكثافة");
+  }
+  if (altitude === "Below 1000m") {
+    tempMin = Math.max(tempMin - 1, 88); tempMax = Math.max(tempMax - 1, 90);
+    tips.push("ارتفاع منخفض: حبوب أقل كثافة — تجنب الإفراط في الحرارة");
+  }
+
+  if (bean.body === "ممتلئ")      { ratioNumber = Math.max(ratioNumber - 1, 12); tips.push("قوام ممتلئ — قلل الماء للحفاظ على الجسم"); }
+  if (bean.body === "كريمي")      { ratioNumber = Math.max(ratioNumber - 1, 12); bloomTime = Math.min(bloomTime + 3, 55); }
+  if (bean.body === "خفيف")       { ratioNumber = Math.min(ratioNumber + 1, 17); tips.push("قوام خفيف — زد الماء لكوب منعش ونظيف"); }
+  if (bean.body === "ناعم وعميق") { tempMin = Math.max(tempMin - 1, 88); tips.push("ناعم وعميق — حرارة أبرد قليلاً تبرز النعومة"); }
+
+  const variety = (bean.variety || "").toLowerCase();
+  if (variety.includes("gesha") || variety.includes("geisha")) {
+    ratioNumber = Math.min(ratioNumber + 1, 17);
+    tips.push("Gesha: من أرق البنوز — ريشيو أعلى يبرز تعقيدها الزهري");
+  }
+  if (variety.includes("bourbon")) tips.push("Bourbon: حلاوة طبيعية — الريشيو المتوسط يبرزها");
+  if (variety.includes("typica"))  tips.push("Typica: كلاسيكي ونظيف — يتسامح مع الريشيو المعتدل");
+
+  ratioNumber = Math.min(Math.max(ratioNumber, 12), 17);
+  tempMin = Math.min(Math.max(tempMin, 86), 97);
+  tempMax = Math.min(Math.max(tempMax, 88), 97);
+  bloomTime = Math.min(Math.max(bloomTime, 30), 55);
+
+  const flavorTip = tips.slice(0, 2).join(" · ") || "ضبط الطحنة والريشيو يعطيك أفضل استخلاص";
 
   return {
     ratio: `1:${ratioNumber}`,
@@ -107,7 +107,8 @@ export function buildBrewRecipe(
   brewMode: BrewMode,
   bloomTime: number,
 ): BrewRecipeStep[] {
-  const brewWater = brewMode === "iced" ? water * 0.6 : water;
+  const effectiveBloomTime = brewMode === "iced" ? Math.max(bloomTime, 48) : bloomTime;
+  const brewWater = brewMode === "iced" ? water * 0.5 : water;
   const bloomAmount = Math.round(coffee * 2);
   const remaining = brewWater - bloomAmount;
   const pourAmount = Math.round(remaining / 3);
@@ -122,9 +123,9 @@ export function buildBrewRecipe(
     amount: bloomAmount,
     totalWater: bloomAmount,
     timestamp: formatTimestamp(elapsed),
-    duration: bloomTime,
+    duration: effectiveBloomTime,
   });
-  elapsed += bloomTime;
+  elapsed += effectiveBloomTime;
 
   // Three pours
   const pourLabels = ["السكبة الأولى", "السكبة الثانية", "السكبة الثالثة"];
@@ -160,16 +161,20 @@ export function buildBrewCalculation(
     .split(":")
     .reduce((acc, t, i) => acc + (i === 0 ? +t * 60 : +t), 0) + lastStep.duration;
 
+  const finalRec = recommendation && brewMode === "iced"
+    ? { ...recommendation, waterTemp: "88–93°C", waterTempRange: [88, 93] as [number, number] }
+    : recommendation;
+
   return {
     coffee,
     water,
     ratio,
     brewMode,
-    brewWater: brewMode === "iced" ? Math.round(water * 0.6) : water,
-    iceWater: brewMode === "iced" ? Math.round(water * 0.4) : undefined,
+    brewWater: brewMode === "iced" ? Math.round(water * 0.5) : water,
+    iceWater: brewMode === "iced" ? Math.round(water * 0.5) : undefined,
     recipe,
     bloomTime,
     totalBrewTime: formatTimestamp(totalSeconds),
-    recommendation,
+    recommendation: finalRec,
   };
 }

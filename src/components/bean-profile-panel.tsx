@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import type { BeanProfile, FlavorNote, Origin, AltitudeRange, ProcessingMethod, RoastLevel } from "@/lib/types";
 import { BEAN_LIBRARY } from "@/lib/bean-library";
 
-type ExtProfile = BeanProfile & { region?: string; variety?: string; body?: string };
 
 const ORIGINS: Origin[] = [
   "Ethiopia", "Kenya", "Colombia", "Brazil", "Yemen",
@@ -154,7 +153,7 @@ export function BeanProfilePanel({ value, onChange }: Props) {
                   ...(bean.region !== undefined && { region: bean.region } as object),
                   ...(bean.variety !== undefined && { variety: bean.variety } as object),
                   ...(bean.body !== undefined && { body: bean.body } as object),
-                } as BeanProfile);
+                });
                 e.target.value = "";
               }}
               className="input-field text-sm"
@@ -241,8 +240,8 @@ export function BeanProfilePanel({ value, onChange }: Props) {
               <input
                 type="text"
                 placeholder="مثال: يرغاتشيفي"
-                value={(value as ExtProfile).region || ""}
-                onChange={(e) => onChange({ ...value, region: e.target.value } as BeanProfile)}
+                value={value.region || ""}
+                onChange={(e) => onChange({ ...value, region: e.target.value })}
                 className="input-field text-sm"
               />
             </div>
@@ -253,8 +252,8 @@ export function BeanProfilePanel({ value, onChange }: Props) {
               <input
                 type="text"
                 placeholder="مثال: Heirloom"
-                value={(value as ExtProfile).variety || ""}
-                onChange={(e) => onChange({ ...value, variety: e.target.value } as BeanProfile)}
+                value={value.variety || ""}
+                onChange={(e) => onChange({ ...value, variety: e.target.value })}
                 className="input-field text-sm"
               />
             </div>
@@ -263,8 +262,8 @@ export function BeanProfilePanel({ value, onChange }: Props) {
             <div className="space-y-1.5">
               <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">القوام</label>
               <select
-                value={(value as ExtProfile).body || ""}
-                onChange={(e) => onChange({ ...value, body: e.target.value } as BeanProfile)}
+                value={value.body || ""}
+                onChange={(e) => onChange({ ...value, body: e.target.value })}
                 className="input-field text-sm"
               >
                 <option value="">اختر القوام…</option>

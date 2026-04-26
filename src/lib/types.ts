@@ -33,6 +33,9 @@ export interface BeanProfile {
   roast: RoastLevel;
   flavorNotes: FlavorNote[];
   name?: string;
+  region?: string;
+  variety?: string;
+  body?: string;
 }
 
 export interface BrewRecommendation {
