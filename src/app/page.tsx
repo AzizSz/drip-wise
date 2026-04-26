@@ -95,6 +95,22 @@ export default function HomePage() {
     const settings = getSettings();
     setRatio(settings.preferredRatio);
     setBrewMode(settings.defaultBrewMode);
+
+    const params = new URLSearchParams(window.location.search);
+    const c = params.get("c");
+    const w = params.get("w");
+    const r = params.get("r");
+    const m = params.get("m");
+
+    if (c) { setCoffee(c); setLastEdited("coffee"); }
+    if (w) { setWater(w); setLastEdited("water"); }
+    if (r) {
+      const rNum = parseInt(r);
+      const rKey = `1:${rNum}` as RatioOption;
+      if (rKey in RATIO_MAP) setRatio(rKey);
+      else { setRatio("custom"); setCustomRatio(rNum); }
+    }
+    if (m === "hot" || m === "iced") setBrewMode(m);
   }, []);
 
   useEffect(() => {
