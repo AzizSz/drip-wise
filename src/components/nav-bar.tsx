@@ -20,11 +20,15 @@ export function NavBar() {
     <>
       {/* Desktop top nav */}
       <header className="hidden md:flex items-center justify-between px-6 py-4 bg-surface-900 border-b border-surface-600 sticky top-0 z-50 backdrop-blur-sm">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-accent-500 flex items-center justify-center">
-            <Coffee size={16} className="text-white" />
+        <Link href="/" className="flex items-center">
+          <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"2px"}}>
+            <span style={{fontSize:"22px",fontWeight:700,color:"#c49a3c",letterSpacing:"1px"}}>قطرة</span>
+            <div style={{display:"flex",alignItems:"center",gap:"6px"}}>
+              <div style={{height:"1px",width:"16px",background:"#3d3528"}}></div>
+              <span style={{fontSize:"9px",fontWeight:400,color:"#6b5e47",letterSpacing:"4px",textTransform:"uppercase"}}>DripWise</span>
+              <div style={{height:"1px",width:"16px",background:"#3d3528"}}></div>
+            </div>
           </div>
-          <span className="text-xl font-bold text-ink-100">Drip<span className="text-accent-500">Wise</span></span>
         </Link>
         <nav className="flex items-center gap-1">
           {NAV_ITEMS.map(({ href, label, icon: Icon }) => (
@@ -64,11 +68,15 @@ export function NavBar() {
 
       {/* Mobile top bar */}
       <header className="md:hidden flex items-center justify-between px-4 py-3 bg-surface-900 border-b border-surface-600 sticky top-0 z-40">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-full bg-accent-500 flex items-center justify-center">
-            <Coffee size={13} className="text-white" />
+        <Link href="/" className="flex items-center">
+          <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"2px"}}>
+            <span style={{fontSize:"22px",fontWeight:700,color:"#c49a3c",letterSpacing:"1px"}}>قطرة</span>
+            <div style={{display:"flex",alignItems:"center",gap:"6px"}}>
+              <div style={{height:"1px",width:"16px",background:"#3d3528"}}></div>
+              <span style={{fontSize:"9px",fontWeight:400,color:"#6b5e47",letterSpacing:"4px",textTransform:"uppercase"}}>DripWise</span>
+              <div style={{height:"1px",width:"16px",background:"#3d3528"}}></div>
+            </div>
           </div>
-          <span className="text-lg font-bold text-ink-100">Drip<span className="text-accent-500">Wise</span></span>
         </Link>
         <span className="text-xs text-ink-400">حاسبة V60</span>
       </header>

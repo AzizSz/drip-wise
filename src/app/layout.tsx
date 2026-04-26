@@ -22,8 +22,8 @@ const ibmPlexArabic = IBM_Plex_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
-  title: "☕ DripWise — أداة عبدالعزيز للقهوة",
-  description: "حاسبة V60 ذكية مع ملفات الحبوب ودليل النسب ووصفات التحضير.",
+  title: "قطرة — أداة عبدالعزيز للقهوة",
+  description: "حاسبة V60 ذكية مع ملفات الحبوب ودليل النسب ووصفات التحضير",
   manifest: "/manifest.json",
   appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "DripWise" },
 };

@@ -1,6 +1,6 @@
 {
-  "name": "DripWise — V60 Calculator",
-  "short_name": "DripWise",
+  "name": "قطرة",
+  "short_name": "قطرة",
   "description": "Smart V60 pour over coffee calculator",
   "start_url": "/",
   "display": "standalone",
