@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Copy, Share2, ArrowLeft, Droplets, Coffee, BookmarkPlus, Check, FlaskConical, Stethoscope } from "lucide-react";
+import { Copy, Share2, ArrowLeft, Droplets, Coffee, BookmarkPlus, Check, FlaskConical, Stethoscope, AlertTriangle } from "lucide-react";
 import { RatioSelector } from "@/components/ratio-selector";
 import { BrewModeToggle } from "@/components/brew-mode-toggle";
 import { BeanProfilePanel } from "@/components/bean-profile-panel";
@@ -85,6 +85,10 @@ export default function HomePage() {
   const [extractionResult, setExtractionResult] = useState<{ pct: number; status: string; color: string; advice: string } | null>(null);
   const [diagnosisOpen, setDiagnosisOpen] = useState(false);
   const [selectedSymptoms, setSelectedSymptoms] = useState<Symptom[]>([]);
+  const [showExtraction, setShowExtraction] = useState(false);
+  const [pouredWater, setPouredWater] = useState("");
+  const [cupYield, setCupYield] = useState("");
+  const [cupCheckResult, setCupCheckResult] = useState<null | "low" | "good" | "high">(null);
 
   const ratioNum = ratio === "custom" ? customRatio : RATIO_MAP[ratio];
 
@@ -492,6 +496,118 @@ export default function HomePage() {
           </div>
         )}
       </div>
+      {calculation && (
+        <div className="card-premium overflow-hidden">
+          <button
+            onClick={() => { setShowExtraction(!showExtraction); setCupCheckResult(null); }}
+            className="w-full flex items-center justify-between p-5 hover:bg-surface-700/30 transition-all"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-sky-950/60 border border-sky-800/40 flex items-center justify-center">
+                <Droplets size={15} className="text-sky-400" />
+              </div>
+              <div>
+                <p className="font-semibold text-ink-100">كيف طلعت قهوتك؟</p>
+                <p className="text-xs text-ink-400">قيّم الاستخلاص بناءً على ما طلع في الكوب</p>
+              </div>
+            </div>
+            <span className="text-ink-400 text-lg">{showExtraction ? "▲" : "▼"}</span>
+          </button>
+
+          {showExtraction && (
+            <div className="px-5 pb-5 space-y-4 border-t border-surface-600/50">
+              <div className="pt-4 grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">الماء اللي صببته (مل)</label>
+                  <input
+                    type="number"
+                    value={pouredWater || String(waterNum)}
+                    onChange={(e) => setPouredWater(e.target.value)}
+                    className="input-field text-sm"
+                    min={0}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-ink-300 uppercase tracking-wide">طلع في الكوب (مل)</label>
+                  <input
+                    type="number"
+                    value={cupYield}
+                    onChange={(e) => setCupYield(e.target.value)}
+                    placeholder="مثال: 240"
+                    className="input-field text-sm"
+                    min={0}
+                  />
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  const pw = parseFloat(pouredWater || String(waterNum));
+                  const cy = parseFloat(cupYield);
+                  if (!pw || !cy) return;
+                  const pct = (cy / pw) * 100;
+                  if (pct < 72) setCupCheckResult("low");
+                  else if (pct <= 88) setCupCheckResult("good");
+                  else setCupCheckResult("high");
+                }}
+                className="btn-primary w-full text-sm"
+              >
+                تحقق
+              </button>
+
+              {cupCheckResult && (
+                <div className="animate-slide-up space-y-3 pt-1">
+                  {cupCheckResult === "low" && (
+                    <div className="flex flex-col items-center gap-3 py-2">
+                      <div className="w-16 h-16 rounded-full bg-red-950/60 border border-red-800/40 flex items-center justify-center">
+                        <span className="text-red-400 text-2xl font-bold">✕</span>
+                      </div>
+                      <div className="text-center">
+                        <p className="font-semibold text-red-400">الاستخلاص ناقص</p>
+                        <p className="text-xs text-ink-400 mt-1">القهوة امتصت ماء كثير — غالباً الطحنة ناعمة جداً</p>
+                      </div>
+                      <div className="flex flex-wrap justify-center gap-2">
+                        {["خشّن الطحنة", "ارفع الحرارة قليلاً", "اصب أبطأ"].map((p) => (
+                          <span key={p} className="text-xs bg-surface-700 text-ink-200 px-3 py-1 rounded-full border border-surface-600">{p}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {cupCheckResult === "good" && (
+                    <div className="flex flex-col items-center gap-3 py-2">
+                      <div className="w-16 h-16 rounded-full bg-emerald-950/60 border border-emerald-800/40 flex items-center justify-center">
+                        <Check size={28} className="text-emerald-400" />
+                      </div>
+                      <div className="text-center">
+                        <p className="font-semibold text-emerald-400">استخلاص ممتاز ✓</p>
+                        <p className="text-xs text-ink-400 mt-1">قهوتك في النطاق المثالي — استمر على نفس الإعدادات</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {cupCheckResult === "high" && (
+                    <div className="flex flex-col items-center gap-3 py-2">
+                      <div className="w-16 h-16 rounded-full bg-amber-950/60 border border-amber-800/40 flex items-center justify-center">
+                        <AlertTriangle size={28} className="text-amber-400" />
+                      </div>
+                      <div className="text-center">
+                        <p className="font-semibold text-amber-400">الاستخلاص زايد</p>
+                        <p className="text-xs text-ink-400 mt-1">ماء كثير طلع بسرعة — غالباً الطحنة خشنة</p>
+                      </div>
+                      <div className="flex flex-wrap justify-center gap-2">
+                        {["نعّم الطحنة", "قلل الحرارة قليلاً", "اصب أهدأ"].map((p) => (
+                          <span key={p} className="text-xs bg-surface-700 text-ink-200 px-3 py-1 rounded-full border border-surface-600">{p}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
