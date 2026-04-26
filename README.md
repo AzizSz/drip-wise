@@ -6,7 +6,6 @@ A smart V60 pour over coffee calculator with bean profiles, brew recipes, ratio 
 
 | Platform | URL |
 |----------|-----|
-| GitHub Pages | https://AzizSz.github.io/drip-wise/ |
 | Vercel | https://drip-wise.vercel.app |
 
 ## Features
