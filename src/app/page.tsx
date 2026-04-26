@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Copy, Share2, ArrowLeft, Droplets, Coffee, BookmarkPlus, Check, Stethoscope, AlertTriangle } from "lucide-react";
+import { Copy, Share2, ArrowLeft, Droplets, Coffee, BookmarkPlus, Check, Stethoscope, AlertTriangle, ClipboardList } from "lucide-react";
 import { RatioSelector } from "@/components/ratio-selector";
 import { BrewModeToggle } from "@/components/brew-mode-toggle";
 import { BeanProfilePanel } from "@/components/bean-profile-panel";
@@ -11,7 +11,7 @@ import type { BrewMode, RatioOption, BeanProfile } from "@/lib/types";
 import {
   calcFromWater, calcFromCoffee, getBeanRecommendation, buildBrewCalculation,
 } from "@/lib/calculator";
-import { encodeShareUrl, saveLastCalc, saveBean, getSettings } from "@/lib/storage";
+import { encodeShareUrl, saveLastCalc, saveBean, getSettings, saveBrewLog } from "@/lib/storage";
 import { cn } from "@/lib/utils";
 
 const RATIO_MAP: Record<Exclude<RatioOption, "custom">, number> = {
@@ -86,6 +86,7 @@ export default function HomePage() {
   const [pouredWater, setPouredWater] = useState("");
   const [cupYield, setCupYield] = useState("");
   const [cupCheckResult, setCupCheckResult] = useState<null | "low" | "good" | "high">(null);
+  const [logSaved, setLogSaved] = useState(false);
 
   const ratioNum = ratio === "custom" ? customRatio : RATIO_MAP[ratio];
 
@@ -304,6 +305,26 @@ export default function HomePage() {
               {beanSaved ? "تم حفظ الحبة!" : "حفظ ملف الحبة"}
             </button>
           )}
+          <button
+            onClick={() => {
+              saveBrewLog({
+                coffee: coffeeNum,
+                water: waterNum,
+                ratio: ratioNum,
+                brewMode,
+                beanName: bean.name || undefined,
+                beanOrigin: bean.origin || undefined,
+                beanProcessing: bean.processing || undefined,
+                beanRoast: bean.roast || undefined,
+              });
+              setLogSaved(true);
+              setTimeout(() => setLogSaved(false), 2000);
+            }}
+            className="w-full flex items-center justify-center gap-2 py-2 text-sm text-ink-400 hover:text-ink-100 border border-surface-600 hover:border-accent-500/50 rounded-xl transition-all"
+          >
+            {logSaved ? <Check size={15} className="text-emerald-400" /> : <ClipboardList size={15} />}
+            {logSaved ? "تم الحفظ ✓" : "سجّل هذي الوصفة"}
+          </button>
         </div>
       )}
       <div className="card-premium overflow-hidden">

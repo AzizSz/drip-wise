@@ -5,7 +5,50 @@ const KEYS = {
   settings: "dripwise_settings",
   savedBeans: "dripwise_saved_beans",
   lastCalc: "dripwise_last_calc",
+  brewLog: "dripwise_brew_log",
 } as const;
+
+export interface BrewLogEntry {
+  id: string;
+  savedAt: number;
+  coffee: number;
+  water: number;
+  ratio: number;
+  brewMode: "hot" | "iced";
+  beanName?: string;
+  beanOrigin?: string;
+  beanProcessing?: string;
+  beanRoast?: string;
+  rating?: number;
+  notes?: string;
+}
+
+export function getBrewLog(): BrewLogEntry[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(KEYS.brewLog);
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+export function saveBrewLog(entry: Omit<BrewLogEntry, "id" | "savedAt">): BrewLogEntry {
+  const log = getBrewLog();
+  const newEntry: BrewLogEntry = { ...entry, id: `log_${Date.now()}`, savedAt: Date.now() };
+  log.unshift(newEntry);
+  if (log.length > 50) log.pop();
+  localStorage.setItem(KEYS.brewLog, JSON.stringify(log));
+  return newEntry;
+}
+
+export function deleteBrewLog(id: string): void {
+  const log = getBrewLog().filter((e) => e.id !== id);
+  localStorage.setItem(KEYS.brewLog, JSON.stringify(log));
+}
+
+export function updateBrewLog(id: string, updates: Partial<BrewLogEntry>): void {
+  const log = getBrewLog().map((e) => (e.id === id ? { ...e, ...updates } : e));
+  localStorage.setItem(KEYS.brewLog, JSON.stringify(log));
+}
 
 export const DEFAULT_SETTINGS: AppSettings = {
   preferredRatio: "1:14",

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Calculator, BookOpen, BarChart2, Settings, Coffee, User } from "lucide-react";
+import { Calculator, BookOpen, BarChart2, Settings, Coffee, User, ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { href: "/guide", label: "الدليل", icon: BarChart2 },
   { href: "/beans", label: "الحبوب", icon: BookOpen },
   { href: "/settings", label: "الإعدادات", icon: Settings },
+  { href: "/log", label: "السجل", icon: ClipboardList },
   { href: "/about", label: "عن المشروع", icon: User },
 ];
 
