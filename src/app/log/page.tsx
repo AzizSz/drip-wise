@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ClipboardList, Trash2, Star, ArrowRight } from "lucide-react";
+import { ClipboardList, Trash2, ArrowRight } from "lucide-react";
 import { getBrewLog, deleteBrewLog, updateBrewLog } from "@/lib/storage";
 import type { BrewLogEntry } from "@/lib/storage";
 
