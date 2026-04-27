@@ -27,6 +27,7 @@ export type FlavorNote =
 export type GrindSize = "Fine" | "Medium-Fine" | "Medium" | "Medium-Coarse" | "Coarse";
 
 export interface BeanProfile {
+  id?: string;
   origin: Origin;
   altitude: AltitudeRange;
   processing: ProcessingMethod;

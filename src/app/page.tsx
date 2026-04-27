@@ -137,7 +137,7 @@ export default function HomePage() {
   const waterNum = parseFloat(water) || 0;
 
   const calculation = coffeeNum > 0 && waterNum > 0
-    ? buildBrewCalculation(coffeeNum, waterNum, ratioNum, brewMode, bloomTime, recommendation)
+    ? buildBrewCalculation(coffeeNum, waterNum, ratioNum, brewMode, bloomTime, recommendation, bean.id, hasBeanData ? bean : undefined)
     : null;
 
   function handleCopy() {

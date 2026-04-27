@@ -145,6 +145,7 @@ export function BeanProfilePanel({ value, onChange }: Props) {
                 if (!bean) return;
                 onChange({
                   ...value,
+                  id: bean.id,
                   origin: bean.origin,
                   altitude: bean.altitude,
                   processing: bean.processing,
