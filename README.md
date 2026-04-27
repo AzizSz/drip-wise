@@ -41,12 +41,11 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Deployment
 
-The app deploys to two platforms from the `master` branch:
+The app deploys to one platform from the `master` branch:
 
-- **GitHub Pages** — via GitHub Actions (`.github/workflows/deploy.yml`). Builds with `output: export` and `basePath: /drip-wise`.
 - **Vercel** — standard Next.js deployment at root path, no basePath needed.
 
-Both are handled automatically by `next.config.mjs` using the `GITHUB_ACTIONS` environment variable to toggle the static export flags.
+it is handled automatically by `next.config.mjs` using the `GITHUB_ACTIONS` environment variable to toggle the static export flags.
 
 ---
 
