@@ -337,10 +337,6 @@ export function buildBrewCalculation(
   beanProfile?: BeanProfile,
 ): BrewCalculation {
   const recipe = buildBrewRecipe(coffee, water, brewMode, bloomTime, beanId);
-  const lastStep = recipe[recipe.length - 1];
-  const totalSeconds = lastStep.timestamp
-    .split(":").reduce((acc, t, i) => acc + (i === 0 ? +t * 60 : +t), 0)
-    + lastStep.duration;
 
   const finalRec = recommendation && brewMode === "iced"
     ? { ...recommendation, waterTemp: "89°C", waterTempRange: [89, 89] as [number, number] }
