@@ -61,6 +61,43 @@ const PRESET_RECIPES: Record<string, PresetRecipe> = {
       totalTime: "2:45", // Natural = slower even iced
     },
   },
+  // Source: محمصة دبليو — قوجي إثيوبيا
+  "qoji-1": {
+    coffee: 20, water: 300, temp: 90,
+    bloomMl: 40, bloomWait: 35,
+    pours: [80, 120, 60],
+    pourIntervals: [35, 75, 135],
+    totalTime: "2:45",
+    icedRecipe: {
+      coffee: 23, brewWater: 160, ice: 170, temp: 91,
+      pours: [50, 60],
+      pourIntervals: [30, 70],
+      totalTime: "1:50",
+    },
+  },
+  // Source: محمصة دبليو — فروتا كولومبيا
+  "fruta-1": {
+    coffee: 20, water: 300, temp: 88,
+    bloomMl: 40, bloomWait: 35,
+    pours: [80, 120, 60],
+    pourIntervals: [35, 75, 135],
+    totalTime: "2:45",
+    icedRecipe: {
+      coffee: 23, brewWater: 160, ice: 170, temp: 89,
+      pours: [50, 60],
+      pourIntervals: [30, 70],
+      totalTime: "1:50",
+    },
+  },
+  // Source: محمصة دبليو — وست فالي كوستاريكا
+  "westvally-1": {
+    coffee: 20, water: 300, temp: 90,
+    bloomMl: 40, bloomWait: 35,
+    pours: [40, 80, 60],
+    pourIntervals: [35, 80, 140],
+    totalTime: "2:45-3:00",
+    icedRecipe: undefined,
+  },
   // Source: Black Knight — El Salvador Silver (Honey)
   "martin-1": {
     coffee: 20, water: 300, temp: 90,
