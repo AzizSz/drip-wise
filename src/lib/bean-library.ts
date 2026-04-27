@@ -1,11 +1,13 @@
 import type { BeanLibraryEntry } from "./types";
 
-// Extended shape used for locally-sourced Saudi roaster beans.
-// Fields beyond BeanLibraryEntry (roaster, waterTemp, bloomTime, precise altitude)
-// are preserved at runtime via the cast below.
-type LocalBeanEntry = BeanLibraryEntry & {
+type LocalBeanEntry = Omit<BeanLibraryEntry, "description"> & {
   roaster?: string;
   waterTemp?: number;
+  bloomTime?: number;
+  description?: string;
+  body?: string;
+  region?: string;
+  variety?: string;
 };
 
 const LOCAL_BEANS: LocalBeanEntry[] = (
@@ -197,7 +199,7 @@ const LOCAL_BEANS: LocalBeanEntry[] = (
       bloomTime: 35,
       description: "وست فالي كوستاريكي طبيعي من دبليو. لافندر ورمان وتوت في كوب عطري مميز.",
     },
-  ] as unknown as LocalBeanEntry[]
+  ]
 );
 
 export const BEAN_LIBRARY: BeanLibraryEntry[] = [
@@ -333,5 +335,5 @@ export const BEAN_LIBRARY: BeanLibraryEntry[] = [
     description: "التخمر اللاهوائي يضخم نكهات بنما الغريبة أصلاً إلى طيف من الفواكه الاستوائية والحلاوة المخمرة.",
     typicalRatio: "1:14–1:15",
   },
-  ...LOCAL_BEANS,
+  ...(LOCAL_BEANS as BeanLibraryEntry[]),
 ];

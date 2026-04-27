@@ -305,7 +305,7 @@ export function buildBrewRecipe(
     const scale = water / preset.water;
     const scaledBloom = Math.round((isIced ? 50 : preset.bloomMl) * scale);
     const scaledPours = src.pours.map(p => Math.round(p * scale));
-    const waitTime    = isIced ? preset.icedRecipe!.pourIntervals[0] : preset.bloomWait;
+    const waitTime    = isIced ? (preset.icedRecipe?.pourIntervals[0] ?? preset.bloomWait) : preset.bloomWait;
 
     let cumulative = 0;
     cumulative += scaledBloom;
@@ -397,7 +397,7 @@ export function buildBrewCalculation(
     bloomTime,
     totalBrewTime: beanId && PRESET_RECIPES[beanId]
       ? (brewMode === "iced" && PRESET_RECIPES[beanId].icedRecipe
-          ? PRESET_RECIPES[beanId].icedRecipe!.totalTime
+          ? (PRESET_RECIPES[beanId].icedRecipe?.totalTime ?? PRESET_RECIPES[beanId].totalTime)
           : PRESET_RECIPES[beanId].totalTime)
       : brewTime,
     recommendation: finalRec,

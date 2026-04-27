@@ -5,10 +5,14 @@ export type RatioOption = "1:10" | "1:12" | "1:13" | "1:14" | "1:15" | "1:16" | 
 export type Origin =
   | "Ethiopia" | "Kenya" | "Colombia" | "Brazil" | "Yemen"
   | "Guatemala" | "Costa Rica" | "Panama" | "Rwanda" | "Burundi"
-  | "Indonesia" | "Mexico" | "Peru" | "Honduras" | "El Salvador" | "";
+  | "Indonesia" | "Mexico" | "Peru" | "Honduras" | "El Salvador"
+  | "مزيج" | "";
 
 export type AltitudeRange =
-  | "Below 1000m" | "1000-1400m" | "1400-1700m" | "1700-2000m" | "2000m+" | "";
+  | "Below 1000m" | "1000-1400m" | "1400-1700m" | "1700-2000m" | "2000m+"
+  | "1400" | "1500-1800" | "1500-2200" | "1600" | "1700" | "1800-2200"
+  | "1850-2200" | "1900-2500" | "2000" | "2100"
+  | "";
 
 export type ProcessingMethod = "Washed" | "Natural" | "Honey" | "Anaerobic" | "Wet-Hulled" | "";
 
