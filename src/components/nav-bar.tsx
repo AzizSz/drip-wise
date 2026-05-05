@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Calculator, BookOpen, BarChart2, Settings, Coffee, User, ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const NAV_ITEMS = [
   { href: "/", label: "تحضير", icon: Calculator },
@@ -42,6 +43,7 @@ export function NavBar() {
               <span>{label}</span>
             </Link>
           ))}
+          <ThemeToggle />
         </nav>
       </header>
 
@@ -79,7 +81,7 @@ export function NavBar() {
             </div>
           </div>
         </Link>
-        <span className="text-xs text-ink-400">حاسبة V60</span>
+        <ThemeToggle />
       </header>
     </>
   );
