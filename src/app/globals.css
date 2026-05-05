@@ -161,7 +161,50 @@
 }
 
 [data-theme="light"] .card {
-  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  background: #ffffff;
+  border-color: #e0d8c8;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+[data-theme="light"] .card-premium {
+  background: #faf5ec;
+  border-color: #d0c5a8;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+[data-theme="light"] .input-field {
+  background-color: #f5f0e8;
+  border-color: #d0c5a8;
+  color: #1a1208;
+}
+
+[data-theme="light"] .input-field::placeholder {
+  color: #a09070;
+}
+
+[data-theme="light"] .tag-inactive {
+  background-color: #ede5d5;
+  border-color: #d0c5a8;
+  color: #5a4830;
+}
+
+[data-theme="light"] .tag-active {
+  background: linear-gradient(135deg, #d4a853, #c49a3c);
+  color: #fff8ec;
+}
+
+[data-theme="light"] .nav-link {
+  color: #8a7a60;
+}
+
+[data-theme="light"] .nav-link:hover {
+  color: #1a1208;
+  background-color: #ede5d5;
+}
+
+[data-theme="light"] .nav-link-active {
+  color: #1a1208;
+  background-color: #e0d8c8;
 }
 
 [data-theme="light"] .btn-primary {
@@ -176,9 +219,17 @@
 }
 
 [data-theme="light"] .btn-secondary {
-  background-color: var(--surface-800);
-  border-color: var(--surface-600);
-  color: var(--ink-200);
+  background-color: #ede5d5;
+  border-color: #d0c5a8;
+  color: #2e2010;
+}
+
+[data-theme="light"] .btn-ghost {
+  color: #8a7a60;
+}
+
+[data-theme="light"] .btn-ghost:hover {
+  background-color: #ede5d5;
 }
 
 [data-theme="light"] .recommendation-card {
@@ -195,17 +246,17 @@
 
 h1 {
   font-family: 'ThmanyahSerif', sans-serif;
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 900;
-  line-height: 1.1;
+  line-height: 1.15;
   letter-spacing: -0.5px;
 }
 
 h2 {
   font-family: 'ThmanyahSerif', sans-serif;
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.3;
 }
 
 body {
