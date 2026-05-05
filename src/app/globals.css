@@ -230,6 +230,20 @@
   background: linear-gradient(180deg, #c49a3c, #9a8868);
 }
 
+[data-theme="light"] h2 {
+  color: #1a1208;
+}
+
+[data-theme="light"] .card-premium h2,
+[data-theme="light"] .card-premium p,
+[data-theme="light"] .card-premium span {
+  color: #1a1208;
+}
+
+[data-theme="light"] .bg-surface-900\/80 {
+  background-color: #f2ece0 !important;
+}
+
 * { box-sizing: border-box; }
 
 h1 {
@@ -241,8 +255,11 @@ h1 {
 }
 
 h2 {
-  font-size: inherit;
-  font-weight: inherit;
+  font-family: 'ThmanyahSerif', sans-serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink-100);
 }
 
 body {
