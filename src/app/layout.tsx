@@ -1,25 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import localFont from "next/font/local";
-import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
-const ibmPlexArabic = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-arabic",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "قطرة — أداة عبدالعزيز للقهوة",
@@ -37,7 +18,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ar" dir="rtl">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${ibmPlexArabic.variable} antialiased`}>
+      <body className="antialiased">
         <div className="min-h-screen flex flex-col">
           <NavBar />
           <main className="flex-1 pb-24 md:pb-8">
