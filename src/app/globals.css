@@ -162,11 +162,13 @@
 
 [data-theme="light"] h1,
 [data-theme="light"] h2,
-[data-theme="light"] h3,
-[data-theme="light"] p,
-[data-theme="light"] span,
-[data-theme="light"] label {
+[data-theme="light"] h3 {
   color: #1a1208;
+}
+
+[data-theme="light"] .nav-link,
+[data-theme="light"] .nav-link-active {
+  color: inherit;
 }
 
 [data-theme="light"] .card {
