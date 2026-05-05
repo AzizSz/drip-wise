@@ -63,6 +63,42 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'ThmanyahSerifText';
+  src: url('/fonts/thmanyahseriftext-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ThmanyahSerifText';
+  src: url('/fonts/thmanyahseriftext-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ThmanyahSerifText';
+  src: url('/fonts/thmanyahseriftext-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ThmanyahSerifText';
+  src: url('/fonts/thmanyahseriftext-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ThmanyahSerifText';
+  src: url('/fonts/thmanyahseriftext-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -106,7 +142,7 @@ body {
   background-color: var(--surface-950);
   color: var(--ink-100);
   min-height: 100vh;
-  font-family: 'ThmanyahSans', 'Segoe UI', system-ui, sans-serif;
+  font-family: 'ThmanyahSerifText', 'Segoe UI', system-ui, sans-serif;
 }
 
 ::-webkit-scrollbar { width: 4px; }

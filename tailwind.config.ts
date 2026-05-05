@@ -41,7 +41,7 @@ const config: Config = {
         bad:  "#c45c3c",
       },
       fontFamily: {
-        sans: ["ThmanyahSans", "Segoe UI", "system-ui", "sans-serif"],
+        sans: ["ThmanyahSerifText", "Segoe UI", "system-ui", "sans-serif"],
         serif: ["ThmanyahSerif", "ThmanyahSans", "sans-serif"],
         mono: ["var(--font-geist-mono)", "monospace"],
       },
