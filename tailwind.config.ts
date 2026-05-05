@@ -42,6 +42,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["ThmanyahSans", "Segoe UI", "system-ui", "sans-serif"],
+        serif: ["ThmanyahSerif", "ThmanyahSans", "sans-serif"],
         mono: ["var(--font-geist-mono)", "monospace"],
       },
       animation: {
