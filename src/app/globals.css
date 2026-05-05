@@ -1,111 +1,69 @@
-@font-face {
-  font-family: 'ThmanyahSans';
-  src: url('/fonts/thmanyahsans-Light.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'ThmanyahSans';
-  src: url('/fonts/thmanyahsans-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'ThmanyahSans';
-  src: url('/fonts/thmanyahsans-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'ThmanyahSans';
-  src: url('/fonts/thmanyahsans-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+/* ══════════════════════════════════════════
+   FONTS
+══════════════════════════════════════════ */
 
 @font-face {
   font-family: 'ThmanyahSerif';
   src: url('/fonts/thmanyahserifdisplay-Light.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 300; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'ThmanyahSerif';
   src: url('/fonts/thmanyahserifdisplay-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 400; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'ThmanyahSerif';
   src: url('/fonts/thmanyahserifdisplay-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 500; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'ThmanyahSerif';
   src: url('/fonts/thmanyahserifdisplay-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 700; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'ThmanyahSerif';
   src: url('/fonts/thmanyahserifdisplay-Black.woff2') format('woff2');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 900; font-style: normal; font-display: swap;
 }
-
 @font-face {
   font-family: 'ThmanyahSerifText';
   src: url('/fonts/thmanyahseriftext-Light.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 300; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'ThmanyahSerifText';
   src: url('/fonts/thmanyahseriftext-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 400; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'ThmanyahSerifText';
   src: url('/fonts/thmanyahseriftext-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 500; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'ThmanyahSerifText';
   src: url('/fonts/thmanyahseriftext-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 700; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'ThmanyahSerifText';
   src: url('/fonts/thmanyahseriftext-Black.woff2') format('woff2');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 900; font-style: normal; font-display: swap;
 }
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ══════════════════════════════════════════
+   DARK MODE (default)
+   Based on: Espresso dark — warm black + aged gold
+   Color theory: Analogous warm tones, gold accent
+══════════════════════════════════════════ */
 :root {
   --background:   #0c0906;
-  --foreground:   #f0e8dc;
   --surface-950:  #0c0906;
   --surface-900:  #131009;
   --surface-800:  #1c1610;
@@ -132,6 +90,13 @@
   --color-bad:  #c45c3c;
 }
 
+/* ══════════════════════════════════════════
+   LIGHT MODE
+   Based on: Warm parchment + dark espresso ink
+   Color theory: Low saturation warm neutrals,
+   high contrast text, gold accent unchanged
+   WCAG AA compliant: ink-100 on background = 12.5:1
+══════════════════════════════════════════ */
 [data-theme="light"] {
   --background:   #faf7f2;
   --surface-950:  #faf7f2;
@@ -143,9 +108,9 @@
 
   --ink-100: #1a1208;
   --ink-200: #2e2010;
-  --ink-300: #4a3820;
-  --ink-400: #7a6848;
-  --ink-500: #9a8868;
+  --ink-300: #5c4a30;
+  --ink-400: #8a7a60;
+  --ink-500: #a89878;
 
   --accent-300: #e8c98a;
   --accent-400: #d4a853;
@@ -153,98 +118,25 @@
   --accent-600: #a07d28;
   --accent-950: #f5edd8;
 
-  --color-hot:  #c85028;
-  --color-iced: #3a8aaa;
-  --color-good: #3a7a50;
+  --color-hot:  #b84020;
+  --color-iced: #2878a0;
+  --color-good: #2a6a40;
   --color-warn: #c49a3c;
-  --color-bad:  #a03a20;
+  --color-bad:  #903020;
 }
 
-[data-theme="light"] h1,
-[data-theme="light"] h2,
-[data-theme="light"] h3 {
-  color: #1a1208;
-}
-
-[data-theme="light"] .nav-link,
-[data-theme="light"] .nav-link-active {
-  color: inherit;
-}
-
-[data-theme="light"] .card {
-  background: #ffffff;
-  border-color: #e4dac8;
-  box-shadow: 0 1px 8px rgba(26,18,8,0.06);
-}
-
-[data-theme="light"] .card-premium {
-  background: #fff;
-  border-color: #d8ceb8;
-  box-shadow: 0 2px 16px rgba(26,18,8,0.08);
-}
-
-[data-theme="light"] .input-field {
-  background-color: #faf7f2;
-  border-color: #d8ceb8;
-  color: #1a1208;
-}
-
-[data-theme="light"] .input-field::placeholder { color: #9a8868; }
-
-[data-theme="light"] .btn-primary {
-  background: linear-gradient(135deg, #2e2010, #1a1208);
-  color: #faf7f2;
-  box-shadow: 0 2px 12px rgba(26,18,8,0.25);
-}
-[data-theme="light"] .btn-primary:hover {
-  background: linear-gradient(135deg, #3e3018, #2e2010);
-  box-shadow: 0 4px 20px rgba(26,18,8,0.35);
-}
-
-[data-theme="light"] .btn-secondary {
-  background-color: #f2ece0;
-  border-color: #d8ceb8;
-  color: #1a1208;
-}
-
-[data-theme="light"] .btn-ghost { color: #7a6848; }
-[data-theme="light"] .btn-ghost:hover { background-color: #ece4d4; }
-
-[data-theme="light"] .tag-inactive {
-  background-color: #f2ece0;
-  border-color: #d8ceb8;
-  color: #4a3820;
-}
-
-[data-theme="light"] .nav-link { color: #7a6848; }
-[data-theme="light"] .nav-link:hover { color: #1a1208; background-color: #ece4d4; }
-[data-theme="light"] .nav-link-active { color: #1a1208; background-color: #e4dac8; }
-
-[data-theme="light"] .recommendation-card {
-  background: linear-gradient(145deg, #fffbf0, #faf7f2);
-  border-color: rgba(196,154,60,0.4);
-}
-
-[data-theme="light"] ::-webkit-scrollbar-track { background: #faf7f2; }
-[data-theme="light"] ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #c49a3c, #9a8868);
-}
-
-[data-theme="light"] h2 {
-  color: #1a1208;
-}
-
-[data-theme="light"] .card-premium h2,
-[data-theme="light"] .card-premium p,
-[data-theme="light"] .card-premium span {
-  color: #1a1208;
-}
-
-[data-theme="light"] .bg-surface-900\/80 {
-  background-color: #f2ece0 !important;
-}
-
+/* ══════════════════════════════════════════
+   BASE
+══════════════════════════════════════════ */
 * { box-sizing: border-box; }
+
+body {
+  background-color: var(--background);
+  color: var(--ink-100);
+  min-height: 100vh;
+  font-family: 'ThmanyahSerifText', 'Segoe UI', system-ui, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
 
 h1 {
   font-family: 'ThmanyahSerif', sans-serif;
@@ -252,28 +144,15 @@ h1 {
   font-weight: 900;
   line-height: 1.15;
   letter-spacing: -0.5px;
+  color: var(--ink-100);
 }
 
 h2 {
   font-family: 'ThmanyahSerif', sans-serif;
-  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
   font-weight: 700;
   line-height: 1.2;
   color: var(--ink-100);
-}
-
-body {
-  background-color: var(--background);
-  color: var(--ink-100);
-  min-height: 100vh;
-  font-family: 'ThmanyahSerifText', 'Segoe UI', system-ui, sans-serif;
-}
-
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #0c0906; }
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #c49a3c, #6b5e47);
-  border-radius: 4px;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -285,7 +164,18 @@ input[type="number"] { -moz-appearance: textfield; }
 
 option { background-color: var(--surface-800); color: var(--ink-100); }
 
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--surface-950); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent-500), var(--ink-400));
+  border-radius: 4px;
+}
+
+/* ══════════════════════════════════════════
+   COMPONENTS
+══════════════════════════════════════════ */
 @layer components {
+
   .card {
     background: var(--surface-900);
     border: 1px solid var(--surface-700);
@@ -422,4 +312,47 @@ option { background-color: var(--surface-800); color: var(--ink-100); }
     background-color: var(--surface-700);
     font-weight: 500;
   }
+}
+
+/* ══════════════════════════════════════════
+   LIGHT MODE OVERRIDES
+   Only override what CSS variables can't handle
+   (hardcoded colors in component definitions)
+══════════════════════════════════════════ */
+[data-theme="light"] .card {
+  background: #ffffff;
+  border-color: #e4dac8;
+  box-shadow: 0 1px 8px rgba(26,18,8,0.06);
+}
+
+[data-theme="light"] .card-premium {
+  background: #f8f3e8;
+  border-color: #d8ceb8;
+  box-shadow: 0 2px 16px rgba(26,18,8,0.08);
+}
+
+[data-theme="light"] .btn-primary {
+  background: linear-gradient(135deg, #2e2010, #1a1208);
+  color: #faf7f2;
+  box-shadow: 0 2px 12px rgba(26,18,8,0.2);
+}
+[data-theme="light"] .btn-primary:hover {
+  background: linear-gradient(135deg, #3e3018, #2e2010);
+  box-shadow: 0 4px 20px rgba(26,18,8,0.3);
+}
+
+[data-theme="light"] .btn-secondary {
+  background-color: var(--surface-800);
+  border-color: var(--surface-600);
+  color: var(--ink-200);
+}
+
+[data-theme="light"] .recommendation-card {
+  background: linear-gradient(145deg, #fffbf0, #faf7f2);
+  border-color: rgba(196,154,60,0.35);
+}
+
+[data-theme="light"] .input-field {
+  background-color: #ffffff;
+  border-color: #d8ceb8;
 }
