@@ -246,7 +246,7 @@ export default function HomePage() {
       </div>
 
       <div className="card p-5 space-y-3">
-        <h2 className="text-sm font-semibold text-ink-300 uppercase tracking-wide">نسبة القهوة إلى الماء</h2>
+        <h2 className="text-base font-semibold text-ink-200 font-serif">نسبة القهوة إلى الماء</h2>
         <RatioSelector
           value={ratio}
           customValue={customRatio}
@@ -269,7 +269,7 @@ export default function HomePage() {
       {calculation && (
         <div className="card p-5 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold text-ink-100">تحضيرك</h2>
+            <h2 className="text-base font-semibold text-ink-200 font-serif">تحضيرك</h2>
             <span className="text-xs bg-surface-700 text-ink-400 rounded-full px-2 py-1">
               نسبة 1:{ratioNum}
             </span>
@@ -353,7 +353,7 @@ export default function HomePage() {
               <Stethoscope size={15} className="text-rose-400" />
             </div>
             <div>
-              <p className="font-semibold text-ink-100">شخّص كوبك</p>
+              <p className="text-base font-semibold text-ink-200 font-serif">شخّص كوبك</p>
               <p className="text-xs text-ink-400">اختر الأعراض وعرف وش المشكلة</p>
             </div>
           </div>
@@ -429,7 +429,7 @@ export default function HomePage() {
                 <Droplets size={15} className="text-sky-400" />
               </div>
               <div>
-                <p className="font-semibold text-ink-100">كيف طلعت قهوتك؟</p>
+                <p className="text-base font-semibold text-ink-200 font-serif">كيف طلعت قهوتك؟</p>
                 <p className="text-xs text-ink-400">قيّم الاستخلاص بناءً على ما طلع في الكوب</p>
               </div>
             </div>

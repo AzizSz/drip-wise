@@ -241,10 +241,8 @@ h1 {
 }
 
 h2 {
-  font-family: 'ThmanyahSerif', sans-serif;
-  font-size: clamp(1.3rem, 3vw, 1.8rem);
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: inherit;
+  font-weight: inherit;
 }
 
 body {
