@@ -41,7 +41,7 @@ const config: Config = {
         bad:  "#c45c3c",
       },
       fontFamily: {
-        sans: ["var(--font-arabic)", "var(--font-geist-sans)", "system-ui", "sans-serif"],
+        sans: ["ThmanyahSans", "Segoe UI", "system-ui", "sans-serif"],
         mono: ["var(--font-geist-mono)", "monospace"],
       },
       animation: {
