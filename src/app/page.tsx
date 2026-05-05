@@ -276,21 +276,21 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-3 gap-3">
-            <div className="bg-surface-900/80 rounded-xl p-3 text-center">
+            <div className="mini-card">
               <div className="text-accent-400 font-bold text-xl">{calculation.coffee}غ</div>
               <div className="text-ink-400 text-xs mt-0.5">قهوة</div>
             </div>
-            <div className="bg-surface-900/80 rounded-xl p-3 text-center">
+            <div className="mini-card">
               <div className="text-sky-400 font-bold text-xl">{calculation.brewWater}مل</div>
               <div className="text-ink-400 text-xs mt-0.5">{brewMode === "iced" ? "ماء التحضير" : "ماء"}</div>
             </div>
             {brewMode === "iced" ? (
-              <div className="bg-surface-900/80 rounded-xl p-3 text-center">
+              <div className="mini-card">
                 <div className="text-cyan-400 font-bold text-xl">{calculation.iceWater}مل</div>
                 <div className="text-ink-400 text-xs mt-0.5">ثلج</div>
               </div>
             ) : (
-              <div className="bg-surface-900/80 rounded-xl p-3 text-center">
+              <div className="mini-card">
                 <div className="text-ink-200 font-bold text-xl">{calculation.totalBrewTime}</div>
                 <div className="text-ink-400 text-xs mt-0.5">وقت التحضير</div>
               </div>
