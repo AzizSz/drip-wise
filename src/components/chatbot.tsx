@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { X, Send, Coffee } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 interface Message {
   role: "user" | "assistant";

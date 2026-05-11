@@ -28,7 +28,7 @@ function RecipeContent() {
         <div className="space-y-1">
           <h2 className="text-xl font-semibold text-ink-200">ما فيه وصفة بعد</h2>
           <p className="text-ink-400 text-sm leading-relaxed max-w-xs mx-auto">
-            اذهب للحاسبة، اختر الكميات والريشيو، ثم اضغط "عرض الوصفة"
+            اذهب للحاسبة، اختر الكميات والريشيو، ثم اضغط &quot;عرض الوصفة&quot;
           </p>
         </div>
         <button onClick={() => router.push("/")} className="btn-primary inline-flex items-center gap-2 mx-auto">

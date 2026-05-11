@@ -190,7 +190,7 @@ export default function LogPage() {
           <div className="text-center space-y-1">
             <p className="text-ink-200 font-semibold">سجّل أول تحضير لك</p>
             <p className="text-ink-400 text-sm leading-relaxed max-w-xs mx-auto">
-              بعد كل تحضير، اضغط "سجّل هذي الوصفة" في الحاسبة — يظهر هنا مع ملاحظاتك وتقييمك
+              بعد كل تحضير، اضغط &quot;سجّل هذي الوصفة&quot; في الحاسبة — يظهر هنا مع ملاحظاتك وتقييمك
             </p>
           </div>
           <button onClick={() => router.push("/")} className="btn-primary text-sm flex items-center gap-2">
