@@ -7,9 +7,9 @@ interface Message {
   content: string;
 }
 
-interface GeminiHistoryItem {
-  role: "user" | "model";
-  parts: { text: string }[];
+interface HistoryItem {
+  role: "user" | "assistant";
+  content: string;
 }
 
 const WELCOME: Message = {
@@ -22,7 +22,7 @@ export function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([WELCOME]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [history, setHistory] = useState<GeminiHistoryItem[]>([]);
+  const [history, setHistory] = useState<HistoryItem[]>([]);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -45,11 +45,6 @@ export function Chatbot() {
     setInput("");
     setIsLoading(true);
 
-    const updatedHistory: GeminiHistoryItem[] = [
-      ...history,
-      { role: "user", parts: [{ text }] },
-    ];
-
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
@@ -70,9 +65,10 @@ export function Chatbot() {
           ...prev,
           { role: "assistant", content: assistantText },
         ]);
-        setHistory([
-          ...updatedHistory,
-          { role: "model", parts: [{ text: assistantText }] },
+        setHistory((prev) => [
+          ...prev,
+          { role: "user", content: text },
+          { role: "assistant", content: assistantText },
         ]);
       }
     } catch {
