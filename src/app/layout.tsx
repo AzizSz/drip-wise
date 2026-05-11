@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
+import { Chatbot } from "@/components/chatbot";
 
 export const metadata: Metadata = {
   title: "قطرة — أداة عبدالعزيز للقهوة",
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </a>
           </footer>
         </div>
+        <Chatbot />
       </body>
     </html>
   );
