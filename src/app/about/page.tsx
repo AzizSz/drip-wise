@@ -5,7 +5,7 @@ export default function AboutPage() {
   return (
     <div className="max-w-xl mx-auto px-4 py-10 space-y-8">
       <div className="space-y-1">
-        <h1 className="text-2xl font-bold text-ink-100">عن DripWise</h1>
+        <h1>عن DripWise</h1>
         <p className="text-ink-400 text-sm">الشخص اللي وراه</p>
       </div>
 

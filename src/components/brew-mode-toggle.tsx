@@ -16,8 +16,8 @@ export function BrewModeToggle({ value, onChange }: Props) {
         className={cn(
           "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all",
           value === "hot"
-            ? "bg-accent-500 text-white"
-            : "text-ink-300 hover:text-ink-100"
+            ? "bg-accent-500 text-white shadow-sm"
+            : "text-ink-300 hover:text-ink-100 hover:bg-surface-700"
         )}
       >
         <Flame size={15} />
@@ -28,8 +28,8 @@ export function BrewModeToggle({ value, onChange }: Props) {
         className={cn(
           "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all",
           value === "iced"
-            ? "bg-sky-500 text-white"
-            : "text-ink-300 hover:text-ink-100"
+            ? "bg-sky-500 text-white shadow-sm"
+            : "text-ink-300 hover:text-ink-100 hover:bg-surface-700"
         )}
       >
         <Snowflake size={15} />

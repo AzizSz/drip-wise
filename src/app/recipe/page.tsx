@@ -21,13 +21,19 @@ function RecipeContent() {
 
   if (!calc) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-12 text-center space-y-4">
-        <Coffee size={48} className="text-surface-600 mx-auto" />
-        <h2 className="text-xl font-semibold text-ink-200">لا توجد وصفة بعد</h2>
-        <p className="text-ink-400">اذهب إلى الحاسبة وحسّب تحضيراً لرؤية وصفتك هنا.</p>
-        <button onClick={() => router.push("/")} className="btn-primary inline-flex items-center gap-2">
+      <div className="max-w-2xl mx-auto px-4 py-16 text-center space-y-5 animate-fade-in">
+        <div className="w-16 h-16 rounded-2xl bg-surface-800 border border-surface-600 flex items-center justify-center mx-auto">
+          <Coffee size={28} className="text-ink-400" />
+        </div>
+        <div className="space-y-1">
+          <h2 className="text-xl font-semibold text-ink-200">ما فيه وصفة بعد</h2>
+          <p className="text-ink-400 text-sm leading-relaxed max-w-xs mx-auto">
+            اذهب للحاسبة، اختر الكميات والريشيو، ثم اضغط "عرض الوصفة"
+          </p>
+        </div>
+        <button onClick={() => router.push("/")} className="btn-primary inline-flex items-center gap-2 mx-auto">
           <ArrowRight size={16} />
-          العودة إلى الحاسبة
+          الحاسبة
         </button>
       </div>
     );
@@ -40,7 +46,7 @@ function RecipeContent() {
           <ArrowRight size={18} />
         </button>
         <div>
-          <h1 className="text-2xl font-bold text-ink-100">وصفة التحضير</h1>
+          <h1>وصفة التحضير</h1>
           <p className="text-ink-400 text-sm">
             {calc.coffee}غ قهوة · {calc.brewMode === "iced" ? `${calc.brewWater}مل + ${calc.iceWater}مل ثلج` : `${calc.water}مل ماء`}
           </p>
@@ -102,13 +108,13 @@ function RecipeContent() {
 
       {/* Timer */}
       <div>
-        <h2 className="text-sm font-semibold text-ink-400 uppercase tracking-wide mb-3">مؤقت التحضير</h2>
+        <h2 className="text-sm font-semibold text-ink-200 uppercase tracking-wide mb-3">مؤقت التحضير</h2>
         <BrewTimer steps={calc.recipe} />
       </div>
 
       {/* Steps */}
       <div>
-        <h2 className="text-sm font-semibold text-ink-400 uppercase tracking-wide mb-3">خطوات السكب</h2>
+        <h2 className="text-sm font-semibold text-ink-200 uppercase tracking-wide mb-3">خطوات السكب</h2>
         <RecipeSteps steps={calc.recipe} />
       </div>
 

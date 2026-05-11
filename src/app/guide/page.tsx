@@ -52,7 +52,7 @@ export default function GuidePage() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-ink-100">دليل النسب</h1>
+        <h1>دليل النسب</h1>
         <p className="text-ink-400 text-sm mt-0.5">فهم كيف تؤثر نسب الماء إلى القهوة على تحضيرك</p>
       </div>
 

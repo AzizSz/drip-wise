@@ -90,6 +90,11 @@ export default function HomePage() {
 
   const ratioNum = ratio === "custom" ? customRatio : RATIO_MAP[ratio];
 
+  const waterError = water !== "" && water !== "0" && (parseFloat(water) <= 0 || isNaN(parseFloat(water)));
+  const coffeeError = coffee !== "" && coffee !== "0" && (parseFloat(coffee) <= 0 || isNaN(parseFloat(coffee)));
+  const waterZero = water === "0";
+  const coffeeZero = coffee === "0";
+
   useEffect(() => {
     setMounted(true);
     const settings = getSettings();
@@ -183,10 +188,10 @@ export default function HomePage() {
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
       <WelcomeModal />
       <div>
-        <h1 className="text-2xl font-bold text-ink-100">حاسبة V60</h1>
-        <p className="text-ink-400 text-sm mt-0.5">أدخل كمية الماء أو القهوة للبدء</p>
+        <h1>حاسبة V60</h1>
+        <p className="text-ink-300 text-sm mt-1">أدخل كمية الماء أو القهوة للبدء</p>
         <p className="text-xs mt-2" style={{ color: "var(--ink-500)" }}>
-          بنيت هذي الأداة عشاني أنا — وبعدين قررت أشاركها 🤙
+          بنيت هذي الأداة عشاني أنا — وبعدين قررت أشاركها
         </p>
       </div>
 
@@ -205,10 +210,14 @@ export default function HomePage() {
               type="number"
               value={water}
               onChange={(e) => { setWater(e.target.value); setLastEdited("water"); }}
-              className="input-field text-lg font-bold text-sky-300"
+              className={cn("input-field text-lg font-bold text-sky-300", (waterError || waterZero) && "input-field-error")}
               placeholder="300"
               min={0}
+              aria-invalid={waterError || waterZero}
             />
+            {(waterError || waterZero) && (
+              <p className="text-xs" style={{ color: "var(--color-bad)" }}>أدخل كمية أكبر من صفر</p>
+            )}
           </div>
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-ink-300 uppercase tracking-wide flex items-center gap-1.5">
@@ -219,10 +228,14 @@ export default function HomePage() {
               type="number"
               value={coffee}
               onChange={(e) => { setCoffee(e.target.value); setLastEdited("coffee"); }}
-              className="input-field text-lg font-bold text-accent-400"
+              className={cn("input-field text-lg font-bold text-accent-400", (coffeeError || coffeeZero) && "input-field-error")}
               placeholder="21.4"
               min={0}
+              aria-invalid={coffeeError || coffeeZero}
             />
+            {(coffeeError || coffeeZero) && (
+              <p className="text-xs" style={{ color: "var(--color-bad)" }}>أدخل كمية أكبر من صفر</p>
+            )}
           </div>
         </div>
 
@@ -255,6 +268,13 @@ export default function HomePage() {
         />
       </div>
 
+      {!calculation && !waterError && !coffeeError && water === "" && (
+        <div className="text-center py-4 space-y-1 animate-fade-in">
+          <p className="text-ink-400 text-sm">أدخل كمية الماء أو القهوة أعلاه</p>
+          <p className="text-ink-500 text-xs">النتيجة ستظهر هنا تلقائياً</p>
+        </div>
+      )}
+
       <BeanProfilePanel value={bean} onChange={setBean} />
 
       {recommendation && (
@@ -267,7 +287,7 @@ export default function HomePage() {
       )}
 
       {calculation && (
-        <div className="card p-5 space-y-4">
+        <div className="card p-5 space-y-4 animate-result-in">
           <div className="flex items-center justify-between">
             <h2 className="text-base font-semibold text-ink-200 font-serif">تحضيرك</h2>
             <span className="text-xs bg-surface-700 text-ink-400 rounded-full px-2 py-1">
@@ -315,10 +335,15 @@ export default function HomePage() {
           {hasBeanData && (
             <button
               onClick={handleSaveBean}
-              className="w-full flex items-center justify-center gap-2 py-2 text-sm text-ink-400 hover:text-ink-100 border border-surface-600 hover:border-accent-500/50 rounded-xl transition-all"
+              className={cn(
+                "w-full flex items-center justify-center gap-2 py-2 text-sm rounded-xl transition-all border",
+                beanSaved
+                  ? "text-emerald-400 border-emerald-700/50 bg-emerald-950/30"
+                  : "text-ink-400 hover:text-ink-100 border-surface-600 hover:border-accent-500/50"
+              )}
             >
               {beanSaved ? <Check size={15} className="text-emerald-400" /> : <BookmarkPlus size={15} />}
-              {beanSaved ? "تم حفظ الحبة!" : "حفظ ملف الحبة"}
+              {beanSaved ? "تم حفظ ملف الحبة" : "حفظ ملف الحبة"}
             </button>
           )}
           <button
@@ -334,12 +359,17 @@ export default function HomePage() {
                 beanRoast: bean.roast || undefined,
               });
               setLogSaved(true);
-              setTimeout(() => setLogSaved(false), 2000);
+              setTimeout(() => setLogSaved(false), 2500);
             }}
-            className="w-full flex items-center justify-center gap-2 py-2 text-sm text-ink-400 hover:text-ink-100 border border-surface-600 hover:border-accent-500/50 rounded-xl transition-all"
+            className={cn(
+              "w-full flex items-center justify-center gap-2 py-2 text-sm rounded-xl transition-all border",
+              logSaved
+                ? "text-emerald-400 border-emerald-700/50 bg-emerald-950/30"
+                : "text-ink-400 hover:text-ink-100 border-surface-600 hover:border-accent-500/50"
+            )}
           >
             {logSaved ? <Check size={15} className="text-emerald-400" /> : <ClipboardList size={15} />}
-            {logSaved ? "تم الحفظ ✓" : "سجّل هذي الوصفة"}
+            {logSaved ? "تم حفظ الوصفة في السجل" : "سجّل هذي الوصفة"}
           </button>
         </div>
       )}

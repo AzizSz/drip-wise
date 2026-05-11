@@ -172,6 +172,7 @@ option { background-color: var(--surface-800); color: var(--ink-100); }
 
   .mini-card {
     background: var(--mini-card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 0.75rem;
     padding: 0.75rem;
     text-align: center;
@@ -224,13 +225,20 @@ option { background-color: var(--surface-800); color: var(--ink-100); }
     padding: 0.75rem 1rem;
     color: var(--ink-100);
     width: 100%;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
   .input-field::placeholder { color: var(--ink-500); }
+  .input-field:hover {
+    border-color: var(--ink-400);
+  }
   .input-field:focus {
     outline: none;
     border-color: var(--accent-500);
     box-shadow: 0 0 0 3px rgba(196,154,60,0.12);
+  }
+  .input-field-error {
+    border-color: var(--color-bad) !important;
+    box-shadow: 0 0 0 3px rgba(196,92,60,0.10) !important;
   }
 
   .tag-active {
@@ -305,4 +313,40 @@ option { background-color: var(--surface-800); color: var(--ink-100); }
 [data-theme="light"] .btn-primary:hover {
   background: linear-gradient(135deg, #3e3018, #2e2010);
   box-shadow: 0 4px 20px rgba(26,18,8,0.3);
+}
+
+/* LIGHT MODE — input hover */
+[data-theme="light"] .input-field:hover {
+  border-color: var(--ink-300);
+}
+
+/* SUCCESS TOAST */
+.toast-success {
+  position: fixed;
+  bottom: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface-700);
+  border: 1px solid var(--color-good);
+  color: var(--color-good);
+  padding: 0.6rem 1.2rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 100;
+  animation: fadeIn 0.25s ease, fadeOut 0.4s ease 1.8s forwards;
+}
+
+@keyframes fadeOut {
+  0%   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(8px); }
+}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

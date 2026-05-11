@@ -170,7 +170,7 @@ export default function LogPage() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <ClipboardList size={22} className="text-accent-400" />
-          <h1 className="text-2xl font-bold text-ink-100">سجل التحضيرات</h1>
+          <h1>سجل التحضيرات</h1>
         </div>
         {log.length > 0 && (
           <button
@@ -183,11 +183,18 @@ export default function LogPage() {
       </div>
 
       {log.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 space-y-4">
-          <ClipboardList size={48} className="text-surface-600" />
-          <p className="text-ink-400">ما سجّلت أي وصفة بعد</p>
+        <div className="flex flex-col items-center justify-center py-20 space-y-4 animate-fade-in">
+          <div className="w-16 h-16 rounded-2xl bg-surface-800 border border-surface-600 flex items-center justify-center">
+            <ClipboardList size={28} className="text-ink-400" />
+          </div>
+          <div className="text-center space-y-1">
+            <p className="text-ink-200 font-semibold">سجّل أول تحضير لك</p>
+            <p className="text-ink-400 text-sm leading-relaxed max-w-xs mx-auto">
+              بعد كل تحضير، اضغط "سجّل هذي الوصفة" في الحاسبة — يظهر هنا مع ملاحظاتك وتقييمك
+            </p>
+          </div>
           <button onClick={() => router.push("/")} className="btn-primary text-sm flex items-center gap-2">
-            اذهب للحاسبة
+            ابدأ التحضير
             <ArrowRight size={14} />
           </button>
         </div>

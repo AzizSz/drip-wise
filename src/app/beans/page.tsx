@@ -175,7 +175,7 @@ export default function BeansPage() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-5">
       <div>
-        <h1 className="text-2xl font-bold text-ink-100">مكتبة الحبوب</h1>
+        <h1>مكتبة الحبوب</h1>
         <p className="text-ink-400 text-sm mt-0.5">ملفات مرجعية للمناشئ الشهيرة</p>
       </div>
 

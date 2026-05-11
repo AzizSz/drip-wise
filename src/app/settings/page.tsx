@@ -34,7 +34,7 @@ export default function SettingsPage() {
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-ink-100">الإعدادات</h1>
+          <h1>الإعدادات</h1>
           <p className="text-ink-400 text-sm mt-0.5">مخزن في متصفحك</p>
         </div>
         {saved && (
